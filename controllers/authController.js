@@ -190,6 +190,7 @@ export const resetPasswordController = async (req, res ) =>{
         res.json({error:"something went wrong in reset password "});
     }
 
+
 }
 
 
