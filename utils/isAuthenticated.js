@@ -12,7 +12,7 @@ export const isAuthenticated = async(req,res,next) =>{
             // request object mein user field add krdo jisse baaki ke process me hume user ki info rhe !!!
 
 
-            req.user = await userModel.findOne({userName});
+            req.user = await userModel.findOne({userName}).select("-password");
             console.log("authenticated user==>>>> " + req.user   )
             next();
         }

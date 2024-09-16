@@ -5,6 +5,7 @@ import { connectToMongoDB } from "./config/mongodb.config.js";
 
 import authRoutes from "./routes/auth.routes.js"
 import { isAuthenticated } from "./utils/isAuthenticated.js";
+import userRoutes from "./routes/user.routes.js";
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.get("/api/test",isAuthenticated,(req,res)=>{
 
 
 app.use("/api/auth",authRoutes);
+app.use("/api/user",isAuthenticated,userRoutes);
 
 
 
