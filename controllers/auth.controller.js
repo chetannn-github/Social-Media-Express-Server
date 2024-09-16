@@ -1,4 +1,4 @@
-import { userModel } from "../models/userModel.js";
+import { userModel } from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
 import { validateEmail } from "../utils/validateEmail.js";
 
@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 export const signUpController = async(req, res)=>{ 
     try {
         let {userName, password,email , confirmPassword, gender,fullName } = req.body;
-        if(!userName || !password || !email || !confirmPassword || !gender  ||!fullName){
+        if(!userName || !password || !email || !confirmPassword || !gender  || !fullName){
          return res.json({"error":"Please fill all the fields!!"})  ;
         
         }
@@ -20,7 +20,7 @@ export const signUpController = async(req, res)=>{
          let user = await userModel.findOne({email});
 
         if(user){
-            return res.status(400).json({error:"Account already exists !!"});
+            return res.status(400).json({error:"Email  already in use !!"});
         }
 
         user = await userModel.findOne({userName});
@@ -79,7 +79,7 @@ export const signUpController = async(req, res)=>{
 }
 
 export const verifyEmailController = async (req, res) =>{
-    let { code} = req.body;
+    let { code } = req.body;
     try { 
         //find user on the basis of code 
         let user = await  userModel.findOne({
@@ -116,6 +116,49 @@ export const verifyEmailController = async (req, res) =>{
 
 }
 
+export const loginController = async(req, res)=>{
+    try {
+        let {userName, password } = req.body;
+        if(!userName || !password  ){
+            return res.json({"error":"Please fill all the fields!!"})  ;
+       
+        }
+
+        // user ko db se find kroo 
+        let user = await userModel.findOne({userName});
+    
+
+        // if user dne => redirect krdo signup route pr 
+        if(!user){
+            return  res.json({"error":"username or password is wrong"});
+
+        }
+
+        // if user exist then compare password and hashpassword using bcrypt 
+        let checkPass =await bcrypt.compare(password,user.password);
+        if(!checkPass){
+            return  res.json({"error":"username or password is wrong"});
+        }
+
+        // if password matches then token generate kro and cookie set krdooo
+        let token = generateToken(userName);
+        res.cookie("token",token,{
+            maxAge:1000*24*3600*30,
+        })
+        // user ki details send krdooo
+
+        res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
+            resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
+
+
+    } catch (error) {
+        res.json({"error":"something went wrong in login route"});
+        console.log(error.message);
+    }
+    
+}
+
+
 export const forgotPasswordController = async(req,res) =>{
     const {email } = req.body;
 
@@ -134,7 +177,7 @@ export const forgotPasswordController = async(req,res) =>{
         user.resetPasswordExpiresAt = resetTokenExpiresAt;
         await user.save();
         
-        // send reset password mail
+        // send reset password mail which contain link which user click and reset their password
 
         res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
             resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
@@ -194,47 +237,7 @@ export const resetPasswordController = async (req, res ) =>{
 }
 
 
-export const loginController = async(req, res)=>{
-    try {
-        let {userName, password } = req.body;
-        if(!userName || !password  ){
-            return res.json({"error":"Please fill all the fields!!"})  ;
-       
-        }
 
-        // user ko db se find kroo 
-        let user = await userModel.findOne({userName});
-    
-
-        // if user dne => redirect krdo signup route pr 
-        if(!user){
-            return  res.json({"error":"username or password is wrong"});
-
-        }
-
-        // if user exist then compare password and hashpassword using bcrypt 
-        let checkPass =await bcrypt.compare(password,user.password);
-        if(!checkPass){
-            return  res.json({"error":"username or password is wrong"});
-        }
-
-        // if password matches then token generate kro and cookie set krdooo
-        let token = generateToken(userName);
-        res.cookie("token",token,{
-            maxAge:1000*24*3600*30,
-        })
-        // user ki details send krdooo
-
-        res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
-            resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
-
-
-    } catch (error) {
-        res.json({"error":"something went wrong in login route"});
-        console.log(error.message);
-    }
-    
-}
 
 export const logoutController = (req, res)=>{
     // cookie ko delete kr do

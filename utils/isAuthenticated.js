@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { userModel } from "../models/userModel.js";
+import { userModel } from "../models/user.model.js";
 
 export const isAuthenticated = async(req,res,next) =>{
     
@@ -13,6 +13,7 @@ export const isAuthenticated = async(req,res,next) =>{
 
 
             req.user = await userModel.findOne({userName});
+            console.log("authenticated user==>>>> " + req.user   )
             next();
         }
         else{res.json({error:"Not Authenticated"});}

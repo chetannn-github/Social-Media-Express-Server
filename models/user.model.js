@@ -25,10 +25,49 @@ const userSchema = new mongoose.Schema({
         type:String,
         enum:["male","female"],
     },
+
+    
+
     profilePic:{
         type:String,
         
     },
+    bio:{
+        type:String,
+        default:"",
+    },
+
+
+    posts:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"Post",
+        default:[]
+    },
+    likedPosts:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"Post",
+        default:[]
+    },
+    savedPosts:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"Post",
+        default:[]
+    },
+    followers:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"User",
+        default:[]
+    }, 
+    followings:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:"User",
+        default:[]
+    },
+    isFrozen:{
+        type:Boolean,
+        default:false,
+    },
+    
     
     isVerified: {
         type: Boolean,
