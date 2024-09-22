@@ -5,19 +5,19 @@ import { validateEmail } from "../utils/validateEmail.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 
-export const signUpController = async(req, res)=>{ 
+export const signUp = async(req, res)=>{ 
     try {
-        let {userName, password,email , confirmPassword, gender,fullName } = req.body;
+        let {userName, password,email , confirmPassword, gender,fullName } = req.body ;
+        // console.log(req.body)
         if(!userName || !password || !email || !confirmPassword || !gender  || !fullName){
          return res.json({"error":"Please fill all the fields!!"})  ;
-        
         }
         if(confirmPassword != password){return res.json({"error":"password and confirmPassword match nhii hue hh!!"})  ;}
         if(!validateEmail(email)){return res.json({"error":"email is not valid"})  ;}
 
         //finding user if it already exist in db 
         
-         let user = await userModel.findOne({email});
+        let user = await userModel.findOne({email});
 
         if(user){
             return res.status(400).json({error:"Email  already in use !!"});
@@ -50,19 +50,16 @@ export const signUpController = async(req, res)=>{
         })
 
         await user.save();
+        console.log(user._id)
 
-        
-        
 
         // login krdoo --- token generate krdo jwt se and cookie set krdooo
-        let token = generateToken(userName);
+        let token = generateToken(user._id.toString());
         res.cookie("token", token,{
             maxAge:1000*60*60*24*30,
         })
 
         // verification code wali email bhej do !!
-
-
 
 
         // user ki details send krdooo 
@@ -78,9 +75,10 @@ export const signUpController = async(req, res)=>{
   
 }
 
-export const verifyEmailController = async (req, res) =>{
+export const verifyEmail = async (req, res) =>{
     let { code } = req.body;
     try { 
+        //! todo agr token se user mil jaae but token expire ho gya toh nya token generate kroo and db me save krke email bhejoo
         //find user on the basis of code 
         let user = await  userModel.findOne({
             verificationToken:code,
@@ -116,9 +114,9 @@ export const verifyEmailController = async (req, res) =>{
 
 }
 
-export const loginController = async(req, res)=>{
+export const login = async(req, res)=>{
     try {
-        let {userName, password } = req.body;
+        let { userName, password } = req.body;
         if(!userName || !password  ){
             return res.json({"error":"Please fill all the fields!!"})  ;
        
@@ -141,7 +139,7 @@ export const loginController = async(req, res)=>{
         }
 
         // if password matches then token generate kro and cookie set krdooo
-        let token = generateToken(userName);
+        let token = generateToken(user._id.toString());
         res.cookie("token",token,{
             maxAge:1000*24*3600*30,
         })
@@ -159,7 +157,7 @@ export const loginController = async(req, res)=>{
 }
 
 
-export const forgotPasswordController = async(req,res) =>{
+export const forgotPassword = async(req,res) =>{
     const {email } = req.body;
 
     try {
@@ -194,9 +192,9 @@ export const forgotPasswordController = async(req,res) =>{
 }
 
 
-export const resetPasswordController = async (req, res ) =>{
-    const {password}= req.body;
-    const {token }= req.params;
+export const resetPassword = async (req, res ) =>{
+    const { password }= req.body;
+    const { token }= req.params;
 
     try {
         
@@ -239,9 +237,10 @@ export const resetPasswordController = async (req, res ) =>{
 
 
 
-export const logoutController = (req, res)=>{
+export const logout = (req, res)=>{
     // cookie ko delete kr do
-    res.cookie("token","");
+    res.clearCookie("token");
+    // res.cookie("token","");
     console.log("logout route");
     res.json({"success":"logout successfull"})
 }

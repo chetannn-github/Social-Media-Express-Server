@@ -6,10 +6,10 @@ const messageSchema = new mongoose.schema({
             ref:"User",
            
     },
-    reciever:{
+    conversationId:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"User" ,
-            required:true
+            ref:"Conversation",
+           
     },
     message:{
         type:String,
@@ -21,6 +21,6 @@ const messageSchema = new mongoose.schema({
     },
 
 
-});
+},{timestamps:true});
 
 export const messageModel = new mongoose.model("Message", messageSchema)

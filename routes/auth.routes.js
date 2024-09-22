@@ -1,24 +1,24 @@
 import { Router } from "express";
 import { 
-        forgotPasswordController,
-        loginController,
-        logoutController,
-        resetPasswordController,
-        signUpController,
-        verifyEmailController
+        forgotPassword,
+        login,
+        logout,
+        resetPassword,
+        signUp,
+        verifyEmail
         } from "../controllers/auth.controller.js";
 
 const authRouter = Router();
 
 
 
-authRouter.route("/signup").post(signUpController);
-authRouter.route("/login").post(loginController);
-authRouter.route("/logout").post(logoutController);
+authRouter.route("/signup").post(signUp);
+authRouter.route("/login").post(login);
+authRouter.route("/logout").post(logout);
 
-authRouter.post("/verify-email", verifyEmailController);
-authRouter.post("/forgot-password", forgotPasswordController);
-authRouter.post("/reset-password/:token", resetPasswordController);
+authRouter.post("/verify-email", verifyEmail);
+authRouter.post("/forgot-password", forgotPassword);
+authRouter.post("/reset-password/:token", resetPassword);
 
 
 export default authRouter ;

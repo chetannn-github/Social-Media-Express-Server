@@ -7,13 +7,13 @@ export const isAuthenticated = async(req,res,next) =>{
     try {
         if(req.cookies.token){
             //jwt se username nikal lo jo 
-            const userName = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+            const id = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
 
             // request object mein user field add krdo jisse baaki ke process me hume user ki info rhe !!!
 
 
-            req.user = await userModel.findOne({userName}).select("-password");
-            console.log("authenticated user==>>>> " + req.user   )
+            req.user = await userModel.findById(id).select("-password").populate(["posts","likedPosts","savedPosts"]);
+            // console.log("authenticated user==>>>> " + req.user   )
             next();
         }
         else{res.json({error:"Not Authenticated"});}

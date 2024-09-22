@@ -1,56 +1,34 @@
 import { userModel } from "../models/user.model.js";
 import bcrypt from "bcrypt"
 
-export const getUserProfile= async (req, res) =>{
 
+
+export const freezeAccount = async (req, res) =>{
     try {
-        const  {userName} = req.params;
-        // find user in database on the basis of username 
-        const user = await  userModel.findOne({userName}).select("-password");
+        // toggle account freeze 
+        let user = await userModel.findById(req.user._id);
 
-        if(!user){
-           return res.json({error:"user not found ! "})
-        }
-
-
-        res.json(user);
-
-    } catch (error) {
-        console.log("error in getUserProfile" + error.message);
-        res.json({error:"something went wrong in getting user profile"});
-        
-    }
-    
-}
-
-export const getSuggestedUsers = async (req, res)=>{
-    try {
-        // find all that users which not followed by loggedin user except him.
-        let suggestedUsers = await userModel.find({
-            $and: [
-              { _id: { $ne: req.user._id } },
-              { _id: { $nin: req.user.followings } }
-            ]
-          }).select("-password")
-        if(!suggestedUsers || suggestedUsers.length==0){
-            res.json({message:"no suggestions "})
-        }
-        
-        res.json(suggestedUsers);
+        user.isFrozen = !user.isFrozen;
+        await user.save();
+        user.password = undefined;
+        res.json({message:`you account succesfully ${user.isFrozen? "frozen " :  " unfrozen "}`,user})
         
     } catch (error) {
-        console.log("error in suggesting users" + error.message);
-       return res.json({error:"something went wrong in suggesting user"});
+        console.log("error in freezing account" + error.message);
+        res.json({error:"something went wrong in freezing Account"});
     }
 }
 
-export const updateUserProfile = async (req, res) =>{
+
+export const updateUser = async (req, res) =>{
     try {
         let user = req.user;
-        let {id} = req.params;
+        //todo take input currentPassword also then only update password
+        //todo also check username already exist or not
+        
         let {userName ,password, fullName, bio} = req.body;
 
-        if(user.id.toString() != id){
+        if(user._id.toString() != req.params.id){
             return res.json({error:"you are not authorised to update this profile"})
         }
         
@@ -75,9 +53,12 @@ export const updateUserProfile = async (req, res) =>{
         user.fullName = fullName || user.fullName;
         user.bio = bio || user.bio;
         
+        
+
+        
         user = await user.save();
 
-        user.password = null;
+        user.password = undefined;
         res.json(user);
         
 
@@ -88,10 +69,59 @@ export const updateUserProfile = async (req, res) =>{
 }
 
 
+
+export const getUserProfile= async (req, res) =>{
+
+    try {
+        const  {userName} = req.params;
+        let user = await  userModel.findOne({userName});
+        if(!user){
+            return res.json({error:"user not found ! "});
+        }
+        if(user._id.toString()==req.user._id.toString()){
+             user = await  userModel.findOne({userName}).select(["-password","-verificationToken"]).populate(["likedPosts","posts","savedPosts"]);
+        }else{
+            user = await  userModel.findOne({userName}).select(["-password","-likedPosts","-savedPosts","-verificationToken"]).populate(["posts"]);
+        }
+       
+        res.json(user);
+
+    } catch (error) {
+        console.log("error in getUserProfile" + error.message);
+        res.json({error:"something went wrong in getting user profile"});
+        
+    }
+    
+}
+
+
+export const getSuggestedUsers = async (req, res)=>{
+    try {
+        // find all that users which not followed by loggedin user except him.
+        let suggestedUsers = await userModel.find({
+            $and: [
+              { _id: { $ne: req.user._id } },
+              { _id: { $nin: req.user.followings } }
+            ]
+          }).select("-password")
+        if(!suggestedUsers || suggestedUsers.length==0){
+            res.json({message:"no suggestions "})
+        }
+        
+        res.json(suggestedUsers);
+        
+    } catch (error) {
+        console.log("error in suggesting users" + error.message);
+       return res.json({error:"something went wrong in suggesting user"});
+    }
+}
+
+
+
+
 export const followUnFollowUser = async (req, res)=>{
     try {
         const {id} = req.params;
-
         
         const currentUser = await userModel.findById(req.user._id);
         const userToModify = await userModel.findById(id);
@@ -106,31 +136,27 @@ export const followUnFollowUser = async (req, res)=>{
         if(isFollowing){
             // unfollow
             await userModel.findByIdAndUpdate(id,{$pull:{followers:req.user._id}});
-            await userModel.findByIdAndUpdate(currentUser,{$pull:{followings:id}});
-            res.status(200).json({ message: "User unfollowed successfully" });
+            let updatedUser =  await userModel.findByIdAndUpdate(currentUser,{$pull:{followings:id}},{returnDocument:"after"});
+            return res.status(200).json({ 
+                message: "User unfollowed successfully" ,
+                user:updatedUser
+
+            });
         }else{
-             await userModel.findByIdAndUpdate(id,{$push:{followers:req.user._id}});
-            await userModel.findByIdAndUpdate(currentUser,{$push:{followings:id}});
-            res.status(200).json({ message: "User followed successfully" });
+            await userModel.findByIdAndUpdate(id,{$push:{followers:req.user._id}});
+            let updatedUser = await userModel.findByIdAndUpdate(currentUser,{$push:{followings:id}},{returnDocument:"after"});
+            return res.status(200).json({ 
+                message: "User followed successfully",
+                user:updatedUser});
         }
 
     } catch (error) {
         console.log("error in follow users" + error.message);
-        res.json({error:"something went wrong in follow user"});
+        res.json({
+            error:"something went wrong in follow user",
+            
+        }
+        );
     }
 }
 
-export const freezeAccount = async (req, res) =>{
-    try {
-        // toggle account freeze 
-        let user = req.user;
-       
-        user.isFrozen = !user.isFrozen;
-        await user.save();
-        res.json({message:`you account succesfully ${user.isFrozen? "frozen " :  " unfrozen "}`})
-        
-    } catch (error) {
-        console.log("error in freezing account" + error.message);
-        res.json({error:"something went wrong in freezing Account"});
-    }
-}

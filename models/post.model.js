@@ -24,7 +24,7 @@ const postSchema = new mongoose.Schema({
             userId:{ 
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"User",
-                default:[]
+            
             },
             text: {
                 type: String,
@@ -36,9 +36,13 @@ const postSchema = new mongoose.Schema({
             userName: {
                 type: String,
             },
+            createdAt:{
+                type:Date,
+                default:Date.now
+            }
             
         },
     ],
-});
+},{timestamps: true,});
 
 export const postModel = new mongoose.model("Post", postSchema)
