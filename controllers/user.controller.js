@@ -117,8 +117,6 @@ export const getSuggestedUsers = async (req, res)=>{
 }
 
 
-
-
 export const followUnFollowUser = async (req, res)=>{
     try {
         const {id} = req.params;

@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.routes.js"
 import { isAuthenticated } from "./utils/isAuthenticated.js";
 import userRoutes from "./routes/user.routes.js";
 import { postRoutes } from "./routes/post.routes.js";
+import { chatRoutes } from "./routes/chat.routes.js";
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.get("/api/test",isAuthenticated,(req,res)=>{
 app.use("/api/auth",authRoutes);
 app.use("/api/user",isAuthenticated,userRoutes);
 app.use("/api/post", isAuthenticated, postRoutes);
+app.use("/api/chat",isAuthenticated,chatRoutes)
 
 
 

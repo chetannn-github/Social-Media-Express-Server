@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const messageSchema = new mongoose.schema({
-    sender:{
+const messageSchema = new mongoose.Schema({
+    senderId:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"User",
            
@@ -18,6 +18,10 @@ const messageSchema = new mongoose.schema({
     img:{
         type:String,
         default:"",
+    },
+    seen: {
+        type: Boolean,
+        default: false,
     },
 
 
