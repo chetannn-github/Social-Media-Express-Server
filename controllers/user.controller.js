@@ -117,7 +117,7 @@ export const getSuggestedUsers = async (req, res)=>{
 }
 
 
-export const followUnFollowUser = async (req, res)=>{
+export const unfollowUser = async (req, res)=>{
     try {
         const {id} = req.params;
         
@@ -141,11 +141,7 @@ export const followUnFollowUser = async (req, res)=>{
 
             });
         }else{
-            await userModel.findByIdAndUpdate(id,{$push:{followers:req.user._id}});
-            let updatedUser = await userModel.findByIdAndUpdate(currentUser,{$push:{followings:id}},{returnDocument:"after"});
-            return res.status(200).json({ 
-                message: "User followed successfully",
-                user:updatedUser});
+            return res.json({error:"you have to follow first to unfollow!"})
         }
 
     } catch (error) {

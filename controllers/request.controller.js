@@ -61,7 +61,7 @@ export const acceptFollowRequest = async (req, res) =>{
     //! followers me add krdo jike paas request aayii hhh
 
     let acceptor = await userModel.findById(request.to);
-    let sender = await userModel.findById(request.from);
+    let sender   = await userModel.findById(request.from);
 
     acceptor.followers.push(sender._id);
     sender.followings.push(acceptor._id);
