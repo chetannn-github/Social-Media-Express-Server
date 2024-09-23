@@ -17,14 +17,15 @@ export const sendFollowRequest = async (req, res) =>{
         let from = await userModel.findById(fromId);
         let to = await userModel.findById(recieverId);
 
-        if(!from || !to){
+        if( !from || !to ){
             return res.json({error:"user not found!!"});
         }
         
+        // check kro kii jo request bhej rha (from) hh us ki followings me wo exist toh nhii krtaa hh
         
-        // check kro kii from ki followings me wo exist toh nhii krtaa hh
-        
-
+        if(from.followings.includes(to._id)){
+            return res.json({error:"you already follow this account"})
+        }
         
         let request = await requestModel.findOneAndDelete({from:fromId,to:recieverId});
         if(request){
@@ -49,31 +50,25 @@ export const acceptFollowRequest = async (req, res) =>{
     if(!requestId){
         return res.json({error:"all fields are required"});
     }
-    let request =  await requestModel.findById(requestId);
+    let request =  await requestModel.findByIdAndDelete(requestId);
 
     if(!request){
         return res.json({error:"request not found "});
 
     }
-
-    request.status = "accepted";
+ // agr request accept ho jaae toh 
+    //! followings me add krooo jisne request bheji hain  sender 
+    //! followers me add krdo jike paas request aayii hhh
 
     let acceptor = await userModel.findById(request.to);
     let sender = await userModel.findById(request.from);
 
-    //! todo agr request accept ho jaae toh 
-    //! followings me add krooo jisne request bheji hain  sender 
-    //! followers me add krdo jike paas request aayii hhh
+    acceptor.followers.push(sender._id);
+    sender.followings.push(acceptor._id);
 
+    await Promise.all([acceptor.save(), sender.save()]);
 
-
-
-
-
-
-
-
-    await request.save();
+   
     res.json({message:"follow request accepted successfully",request})
 }
 
@@ -82,14 +77,13 @@ export const rejectFollowRequest = async (req, res) =>{
     if(!requestId){
         return res.json({error:"all fields are required"});
     }
-    let request =  await requestModel.findById(requestId);
+    let request =  await requestModel.findByIdAndDelete(requestId);
 
     if(!request){
         return res.json({error:"request not found "});
 
     }
 
-    request.status = "rejected";
-    await request.save();
+    
     res.json({message:"follow request rejected successfully",request})
 }
