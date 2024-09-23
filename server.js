@@ -28,6 +28,7 @@ app.use("/api/user",isAuthenticated,userRoutes);
 app.use("/api/post", isAuthenticated, postRoutes);
 app.use("/api/chat",isAuthenticated,chatRoutes);
 app.use("/api/request",isAuthenticated,requestRoutes);
+app.use("/api/notification",isAuthenticated);
 
 
 

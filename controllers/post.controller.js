@@ -1,3 +1,4 @@
+import { notificationModel } from "../models/notification.model.js";
 import { postModel } from "../models/post.model.js";
 import { userModel } from "../models/user.model.js";
 
@@ -85,6 +86,9 @@ export const likePost = async (req, res) =>{
             loggedInUser.likedPosts.push(postId);
             post.likes.push(loggedInUser._id); 
             console.log("like hua");
+
+            let newNotification = new notificationModel({reciever:post.owner,type:"like"});
+            await newNotification.save();
             
            
         }
@@ -236,6 +240,8 @@ export const createComment= async (req, res) =>{
             return res.json({error:"user not found"});
         }
         post.comments.push({text, userId:req.user._id,userProfilePic:user.profilePic,userName:user.userName});
+        let newNotification = new notificationModel({reciever:post.owner,type:"comment"});
+        await newNotification.save();
         await post.save();
 
         res.json(post);

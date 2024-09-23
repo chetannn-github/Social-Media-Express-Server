@@ -1,3 +1,4 @@
+import { notificationModel } from "../models/notification.model.js";
 import { requestModel } from "../models/request.model.js";
 import { userModel } from "../models/user.model.js";
 
@@ -79,7 +80,11 @@ export const acceptFollowRequest = async (req, res) =>{
     acceptor.followers.push(sender._id);
     sender.followings.push(acceptor._id);
 
-    await Promise.all([acceptor.save(), sender.save()]);
+    // create a notification to sender 
+    let newNotification = new notificationModel({reciever:sender,type:"requestAccepted"})
+    
+
+    await Promise.all([acceptor.save(), sender.save(), newNotification.save()]);
 
    
     res.json({message:"follow request accepted successfully",request})

@@ -9,6 +9,6 @@ const conversationSchema = new mongoose.Schema({
         }
     ],
 
-});
+},{timestamps:true});
 
 export const conversationModel = new mongoose.model("Conversation", conversationSchema)
