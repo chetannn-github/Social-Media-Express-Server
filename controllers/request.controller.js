@@ -49,14 +49,27 @@ export const acceptFollowRequest = async (req, res) =>{
     let {requestId} = req.body;
     if(!requestId){
         return res.json({error:"all fields are required"});
+
+
     }
-    let request =  await requestModel.findByIdAndDelete(requestId);
+
+    let request =  await requestModel.findById(requestId);
+
+
 
     if(!request){
         return res.json({error:"request not found "});
 
     }
- // agr request accept ho jaae toh 
+
+    if(request.to.toString()!== req.user._id.toString()){
+        return res.json({error:"you are not authorised to accept this request"})
+    }
+
+    await request.findByIdAndDelete(requestId);
+
+
+    // agr request accept ho jaae toh 
     //! followings me add krooo jisne request bheji hain  sender 
     //! followers me add krdo jike paas request aayii hhh
 
@@ -77,12 +90,19 @@ export const rejectFollowRequest = async (req, res) =>{
     if(!requestId){
         return res.json({error:"all fields are required"});
     }
-    let request =  await requestModel.findByIdAndDelete(requestId);
+    let request =  await requestModel.findById(requestId);
 
+    
     if(!request){
         return res.json({error:"request not found "});
 
     }
+    
+    if(request.to.toString()!== req.user._id.toString()){
+        return res.json({error:"you are not authorised to reject this request"})
+    }
+
+    await request.findByIdAndDelete(requestId);
 
     
     res.json({message:"follow request rejected successfully",request})
