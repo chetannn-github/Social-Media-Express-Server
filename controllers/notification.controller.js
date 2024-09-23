@@ -17,7 +17,7 @@ export const readAllNotifications = async(req,res) =>{
         if(!notifications){
             return res.json({error:"no notification"})
         }
-        return res.json({success:"notifications deleted successfully."})
+        return res.json({success:"notifications read successfully."})
         } catch (error) {
             console.log("something went wrong in reading notifications")
             res.json({error:"error in reading notifications"})

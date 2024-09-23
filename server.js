@@ -9,6 +9,7 @@ import userRoutes from "./routes/user.routes.js";
 import { postRoutes } from "./routes/post.routes.js";
 import { chatRoutes } from "./routes/chat.routes.js";
 import { requestRoutes } from "./routes/request.routes.js";
+import { notificationRoutes } from "./routes/notification.routes.js";
 
 
 const app = express();
@@ -28,7 +29,7 @@ app.use("/api/user",isAuthenticated,userRoutes);
 app.use("/api/post", isAuthenticated, postRoutes);
 app.use("/api/chat",isAuthenticated,chatRoutes);
 app.use("/api/request",isAuthenticated,requestRoutes);
-app.use("/api/notification",isAuthenticated);
+app.use("/api/notification",isAuthenticated,notificationRoutes);
 
 
 

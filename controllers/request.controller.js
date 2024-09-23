@@ -67,7 +67,7 @@ export const acceptFollowRequest = async (req, res) =>{
         return res.json({error:"you are not authorised to accept this request"})
     }
 
-    await request.findByIdAndDelete(requestId);
+    await requestModel.findByIdAndDelete(requestId);
 
 
     // agr request accept ho jaae toh 
@@ -107,8 +107,22 @@ export const rejectFollowRequest = async (req, res) =>{
         return res.json({error:"you are not authorised to reject this request"})
     }
 
-    await request.findByIdAndDelete(requestId);
+    await requestModel.findByIdAndDelete(requestId);
 
     
     res.json({message:"follow request rejected successfully",request})
+}
+
+
+export const getAllRequests = async(req,res) =>{
+    try {
+       
+        // find all the request whose to == loggedinuser id
+        let requests = await requestModel.find({to:req.user._id});
+        res.json(requests);
+    
+    } catch (error) {
+        console.log(error)
+        res.json({error:"something went wrong in getting request"})
+    }
 }

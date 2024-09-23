@@ -61,11 +61,10 @@ export const signUp = async(req, res)=>{
 
         // verification code wali email bhej do !!
 
-
+        user.password= undefind;
         // user ki details send krdooo 
         console.log("signup route");
-        res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
-            resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
+        res.json({user});
 
 
     } catch (error) {
@@ -123,7 +122,7 @@ export const login = async(req, res)=>{
         }
 
         // user ko db se find kroo 
-        let user = await userModel.findOne({userName});
+        let user = await userModel.findOne({userName}).select(["-verificationToken","-resetPasswordToken"]);
     
 
         // if user dne => redirect krdo signup route pr 
@@ -144,9 +143,8 @@ export const login = async(req, res)=>{
             maxAge:1000*24*3600*30,
         })
         // user ki details send krdooo
-
-        res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
-            resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
+        user.password = undefined;
+        res.json({user});
 
 
     } catch (error) {
@@ -161,7 +159,7 @@ export const forgotPassword = async(req,res) =>{
     const {email } = req.body;
 
     try {
-        const user = await userModel.findOne({email});
+        const user = await userModel.findOne({email}).select(["-password","-verificationToken"]);
         if(!user){
             return res.status(400).json({ error: "User not found" });
 
@@ -175,10 +173,10 @@ export const forgotPassword = async(req,res) =>{
         user.resetPasswordExpiresAt = resetTokenExpiresAt;
         await user.save();
         
+        
         // send reset password mail which contain link which user click and reset their password
 
-        res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
-            resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
+        res.json({user});
         // res.json({ success: "Password reset link sent to your email" });
 
     } catch (error) {
