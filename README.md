@@ -1,4 +1,4 @@
-# API Documentation for Social Media Server
+# API Documentation for Social Media Express Server
 
 ## Introduction
 This documentation provides detailed information about the API endpoints for the social media server. The API is designed for interaction with users, posts, comments, likes, and messaging functionalities.
@@ -13,25 +13,52 @@ This documentation provides detailed information about the API endpoints for the
 
 #### Endpoints:
 
-1. **Sign Up**
+### 1. **Sign Up**
    - **URL:** `/signup`
    - **Method:** `POST`
-   - **Description:** Registers a new user account.
+   - **Description:** Registers a new user after validating input, ensuring unique email and username. Hashes password, sets profile picture, and sends a verification email.
+
    - **Request Body:**
      ```json
      {
-       "username": "string",
+       "userName": "string",
        "email": "string",
-       "password": "string"
+       "password": "string",
+       "confirmPassword": "string",
+       "fullName": "string",
+       "gender": "male | female"
      }
      ```
+
+   - **Validation:**
+     - **`email`**: Must be unique, lowercase, valid, max length 20.
+     - **`userName`**: Unique, lowercase, trimmed.
+     - **`password`**: 8-15 characters, must match `confirmPassword`.
+     - **`fullName`**: Required.
+     - **`gender`**: "male" or "female".
+  
    - **Response:**
+     - **Success:** User details (excluding password), profile picture, and JWT token.
      ```json
      {
-       "message": "User registered successfully.",
-       "userId": "uuid"
+       "user": {
+         "userName": "string",
+         "email": "string",
+         "fullName": "string",
+         "gender": "male | female",
+         "profilePic": "url"
+       },
+       "message": "User registered successfully."
      }
      ```
+     - **Errors:**
+       - Missing fields, password mismatch, invalid email, or existing email/username.
+       ```json
+       {
+         "error": "Error message"
+       }
+       ```
+
 
 2. **Log In**
    - **URL:** `/login`
