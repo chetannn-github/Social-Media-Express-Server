@@ -502,11 +502,11 @@ This documentation provides detailed information about the API endpoints for the
    ---
 
     ## Request Body Parameters
-    | Parameter     | Type    | Description                                     | Required |
-    |---------------|---------|-------------------------------------------------|----------|
-    | `message`     | String  | The message content, trimmed                    | Yes      |
-    | `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
-    | `img`         | String  | (Optional) Image URL to be sent with the message | No       |
+      | Parameter     | Type    | Description                                     | Required |
+      |---------------|---------|-------------------------------------------------|----------|
+      | `message`     | String  | The message content, trimmed                    | Yes      |
+      | `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
+      | `img`         | String  | (Optional) Image URL to be sent with the message | No       |
 
     ---
    - **Response:**
