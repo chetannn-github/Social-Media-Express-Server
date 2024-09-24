@@ -452,7 +452,7 @@ This documentation provides detailed information about the API endpoints for the
 #### Endpoints:
 
 ### 1. **Get All Notifications**
-   - **URL:** `/`
+   - **URL:** `/api/notification`
    - **Method:** `GET`
    - **Description:** Retrieves all notifications for the authenticated user.
    - **Response:**
@@ -460,7 +460,8 @@ This documentation provides detailed information about the API endpoints for the
      [
        {
          "notificationId": "uuid",
-         "message": "string",
+         "reciever":"uuid",
+         "type":"enum:["requestAccepted", "like", "comment"]",
          "read": "boolean",
          "created_at": "timestamp"
        }
@@ -468,7 +469,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 2. **Mark All Notifications as Read**
-   - **URL:** `/`
+   - **URL:** `/api/notification`
    - **Method:** `PATCH`
    - **Description:** Marks all notifications as read for the authenticated user.
    - **Response:**
@@ -479,7 +480,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 3. **Delete All Notifications**
-   - **URL:** `/`
+   - **URL:** `/api/notification`
    - **Method:** `DELETE`
    - **Description:** Deletes all notifications for the authenticated user.
    - **Response:**
@@ -502,7 +503,7 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-## Request Body Parameters
+### Request Body Parameters
 
 | Parameter     | Type    | Description                                     | Required |
 |---------------|---------|-------------------------------------------------|----------|
