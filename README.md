@@ -502,6 +502,7 @@ This documentation provides detailed information about the API endpoints for the
    ---
 
     ## Request Body Parameters
+    
       | Parameter     | Type    | Description                                     | Required |
       |---------------|---------|-------------------------------------------------|----------|
       | `message`     | String  | The message content, trimmed                    | Yes      |
