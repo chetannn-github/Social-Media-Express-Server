@@ -16,7 +16,7 @@ This documentation provides detailed information about the API endpoints for the
 # API Documentation
 
 ## 1. **Sign Up**
-- **URL:** `/signup`
+- **URL:** `/api/auth/signup`
 - **Method:** `POST`
 - **Description:** Registers a new user after validating input fields, ensuring the uniqueness of email and username. Passwords are hashed, a profile picture is generated, and a verification email is sent.
 
@@ -60,7 +60,7 @@ This documentation provides detailed information about the API endpoints for the
 
 
 ## 2. **Log In**
-   - **URL:** `/login`
+   - **URL:** `api/auth/login`
    - **Method:** `POST`
    - **Description:** Logs in a user and returns a JWT token.
    ---
@@ -84,7 +84,7 @@ This documentation provides detailed information about the API endpoints for the
     "fullName": "User FullName",
     "gender": "male/female",
     "profilePic": "ProfilePicURL",
-    "isVerified": false,
+    "isVerified": false/true,
     "followers": [],
     "followings": [],
     "posts": [],
@@ -97,7 +97,7 @@ This documentation provides detailed information about the API endpoints for the
 ```
 
 3. **Log Out**
-   - **URL:** `/logout`
+   - **URL:** `api/auth/logout`
    - **Method:** `POST`
    - **Description:** Logs out the user.
    - **Response:**
@@ -108,7 +108,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 4. **Verify Email**
-   - **URL:** `/verify-email`
+   - **URL:** `.api/auth/verify-email`
    - **Method:** `POST`
    - **Description:** Verifies the user’s email using a verification code. Updates the user's verification status if valid; returns an error if invalid or expired.
 
@@ -131,7 +131,7 @@ This documentation provides detailed information about the API endpoints for the
 ---
 
 5. **Forgot Password**
-   - **URL:** `/forgot-password`
+   - **URL:** `api/auth/forgot-password`
    - **Method:** `POST`
    - **Description:** Sends a password reset link to the user's email.
    - **Request Body:**
@@ -148,15 +148,26 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 6. **Reset Password**
-   - **URL:** `/reset-password/:token`
+   - **URL:** `api/auth/reset-password/:token`
    - **Method:** `POST`
    - **Description:** Resets the user's password using a reset token.
-   - **Request Body:**
-     ```json
-     {
-       "newPassword": "string"
-     }
-     ```
+   ---
+   ## Request Parameters
+
+| Parameter | Type   | Description                              | Required |
+|-----------|--------|------------------------------------------|----------|
+| `token`   | String | The password reset token provided to the user | Yes      |
+
+---
+
+## Request Body Parameters
+
+| Parameter  | Type   | Description                             | Required |
+|------------|--------|-----------------------------------------|----------|
+| `password` | String | The new password for the user (8-15 characters) | Yes      |
+
+---
+
    - **Response:**
      ```json
      {
