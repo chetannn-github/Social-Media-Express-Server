@@ -32,10 +32,10 @@ This documentation provides detailed information about the API endpoints for the
 }
 
     
-       ```
+```
 
 
-2. **Log In**
+## 2. **Log In**
    - **URL:** `/login`
    - **Method:** `POST`
    - **Description:** Logs in a user and returns a JWT token.
