@@ -383,16 +383,16 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `GET`
    - **Description:** Retrieves all follow requests for the authenticated user.
    - **Response:**
-    ```json
-[
-  {
-    "_id": "request-id",
-    "from": "user-id-of-sender",
-    "to": "user-id-of-recipient",
-    "status": "pending/accepted/rejected",
-  },
-  ...
-]
+     ```json
+      [
+        {
+          "_id": "request-id",
+          "from": "user-id-of-sender",
+          "to": "user-id-of-recipient",
+          "status": "pending/accepted/rejected",
+        },
+      ...
+    ]
     ```
 
 ### 2. **Send Follow Request**
