@@ -499,10 +499,10 @@ This documentation provides detailed information about the API endpoints for the
    - **URL:** `/api/chat/message`
    - **Method:** `POST`
    - **Description:** Sends a message from one user to another. If there is no existing conversation between the sender and receiver, a new conversation is created.
-   ---
 
-    ## Request Body Parameters
-    
+  ---
+  ## Request Body Parameters
+
       | Parameter     | Type    | Description                                     | Required |
       |---------------|---------|-------------------------------------------------|----------|
       | `message`     | String  | The message content, trimmed                    | Yes      |
