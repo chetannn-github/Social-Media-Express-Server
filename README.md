@@ -392,8 +392,8 @@ This documentation provides detailed information about the API endpoints for the
           "status": "pending/accepted/rejected",
         },
       ...
-    ]
-    ```
+      ]
+     ```
 
 ### 2. **Send Follow Request**
    - **URL:** `/api/request/send`
