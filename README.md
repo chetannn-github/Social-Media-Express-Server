@@ -512,16 +512,16 @@ This documentation provides detailed information about the API endpoints for the
     ---
    - **Response:**
      ```json
-    {
-      "_id": "message-id",
-      "senderId": "sender-id",
-      "conversationId": "conversation-id",
-      "message": "Message content",
-      "img": "Image URL (if any)",
-      "seen": false,
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp"
-    }
+      {
+        "_id": "message-id",
+        "senderId": "sender-id",
+        "conversationId": "conversation-id",
+        "message": "Message content",
+        "img": "Image URL (if any)",
+        "seen": false,
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      }
      ```
 
 ### 2. **Get All Messages with a User**
@@ -530,21 +530,21 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Retrieves all messages exchanged between the authenticated user and a specified user (receiverId).
    - **Response:**
      ```json
-    {
-      "messages": [
-        {
-          "_id": "message-id",
-          "senderId": "sender-id",
-          "conversationId": "conversation-id",
-          "message": "Message content",
-          "img": "Image URL (if any)",
-          "seen": false,
-          "createdAt": "timestamp",
-          "updatedAt": "timestamp"
-        },
-        ...
-      ]
-    }
+      {
+        "messages": [
+          {
+            "_id": "message-id",
+            "senderId": "sender-id",
+            "conversationId": "conversation-id",
+            "message": "Message content",
+            "img": "Image URL (if any)",
+            "seen": false,
+            "createdAt": "timestamp",
+            "updatedAt": "timestamp"
+          },
+          ...
+        ]
+      }
 
      ```
 
@@ -554,17 +554,17 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Retrieves a list of all conversations the authenticated user is part of.
    - **Response:**
      ```json
-    [
-      {
-        "_id": "conversation-id",
-        "participants": [
-          "user-id-1",
-          "user-id-2"
-        ],
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp"
-      },
-      ...
-    ]
+      [
+        {
+          "_id": "conversation-id",
+          "participants": [
+            "user-id-1",
+            "user-id-2"
+          ],
+          "createdAt": "timestamp",
+          "updatedAt": "timestamp"
+        },
+        ...
+      ]
      ```
 
