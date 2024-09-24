@@ -20,15 +20,39 @@ This documentation provides detailed information about the API endpoints for the
 - **Method:** `POST`
 - **Description:** Registers a new user after validating input fields, ensuring the uniqueness of email and username. Passwords are hashed, a profile picture is generated, and a verification email is sent.
 
-### Request Body:
+
+---
+
+### Request Body Parameters
+
+| Parameter         | Type    | Description                                         | Required |
+|-------------------|---------|-----------------------------------------------------|----------|
+| `userName`        | String  | Unique username, must be lowercase and trimmed      | Yes      |
+| `password`        | String  | User's password (8-15 characters, trimmed)          | Yes      |
+| `confirmPassword` | String  | Should match the `password` field                   | Yes      |
+| `email`           | String  | User's email address, must be valid and unique      | Yes      |
+| `gender`          | String  | Gender of the user (`male` or `female`)             | Yes      |
+| `fullName`        | String  | Full name of the user, trimmed                      | Yes      |
+
+---
+
+### Response
 ```json
 {
-  "userName": "string",       // Unique username (lowercase, trimmed)
-  "email": "string",          // Unique, valid email (max length 20, lowercase)
-  "password": "string",       // Password (8-15 characters)
-  "confirmPassword": "string",// Must match the password
-  "fullName": "string",       // Required full name of the user
-  "gender": "male | female"   // Gender of the user
+  "user": {
+    "_id": "USER_ID",
+    "email": "user@example.com",
+    "userName": "username",
+    "fullName": "User FullName",
+    "gender": "male/female",
+    "profilePic": "ProfilePicURL",
+    "isVerified": false,
+    "followers": [],
+    "followings": [],
+    "posts": [],
+    "likedPosts": [],
+    "savedPosts": []
+  }
 }
 
     
