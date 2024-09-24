@@ -511,7 +511,6 @@ This documentation provides detailed information about the API endpoints for the
 
     ---
    - **Response:**
-     
      ```json
     {
       "_id": "message-id",
@@ -530,7 +529,6 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `GET`
    - **Description:** Retrieves all messages exchanged between the authenticated user and a specified user (receiverId).
    - **Response:**
-     
      ```json
     {
       "messages": [
@@ -556,7 +554,6 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Retrieves a list of all conversations the authenticated user is part of.
    - **Response:**
      ```json
-    
     [
       {
         "_id": "conversation-id",
