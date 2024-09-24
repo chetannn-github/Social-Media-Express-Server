@@ -177,11 +177,11 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-### 2. **User API (Extended)**
+## 2. **User API (Extended)**
 
 #### Endpoints:
 
-1. **Get Suggested Users**
+### 1. **Get Suggested Users**
    - **URL:** `/suggested`
    - **Method:** `GET`
    - **Description:** Retrieves a list of suggested users for the authenticated user.
@@ -196,7 +196,7 @@ This documentation provides detailed information about the API endpoints for the
      ]
      ```
 
-2. **Get User Profile**
+### 2. **Get User Profile**
    - **URL:** `/profile/{userName}`
    - **Method:** `GET`
    - **Description:** Retrieves the profile information of a specific user by username.
@@ -210,7 +210,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-3. **Freeze Account**
+### 3. **Freeze Account**
    - **URL:** `/freeze`
    - **Method:** `PATCH`
    - **Authentication:** Required
@@ -222,7 +222,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-4. **Update User**
+### 4. **Update User**
    - **URL:** `/update/{id}`
    - **Method:** `PATCH`
    - **Authentication:** Required
@@ -242,7 +242,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-5. **Unfollow User**
+### 5. **Unfollow User**
    - **URL:** `/unfollow/{id}`
    - **Method:** `POST`
    - **Authentication:** Required
@@ -254,11 +254,11 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-### 3. **Posts API (Extended)**
+## 3. **Posts API (Extended)**
 
 #### Endpoints:
 
-1. **Get Feed Posts**
+### 1. **Get Feed Posts**
    - **URL:** `/feed`
    - **Method:** `GET`
    - **Description:** Retrieves a list of posts from users that the authenticated user is following, sorted by recent activity.
@@ -279,7 +279,7 @@ This documentation provides detailed information about the API endpoints for the
      ]
      ```
 
-2. **Get Post by ID**
+### 2. **Get Post by ID**
    - **URL:** `/{postId}`
    - **Method:** `GET`
    - **Description:** Retrieves details of a specific post by its ID.
@@ -298,7 +298,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-3. **Create Post**
+### 3. **Create Post**
    - **URL:** `/create`
    - **Method:** `POST`
    - **Description:** Creates a new post for the authenticated user.
@@ -317,7 +317,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-4. **Create Comment**
+### 4. **Create Comment**
    - **URL:** `/comment`
    - **Method:** `POST`
    - **Description:** Adds a comment to a post.
@@ -336,7 +336,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-5. **Like Post**
+### 5. **Like Post**
    - **URL:** `/like/{postId}`
    - **Method:** `PATCH`
    - **Description:** Likes a post with the given post ID.
@@ -349,7 +349,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-6. **Save Post**
+### 6. **Save Post**
    - **URL:** `/save/{postId}`
    - **Method:** `PATCH`
    - **Description:** Saves a post to the authenticated user's collection.
@@ -361,7 +361,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-7. **Delete Post**
+### 7. **Delete Post**
    - **URL:** `/delete/{postId}`
    - **Method:** `DELETE`
    - **Description:** Deletes the post with the given post ID.
@@ -374,11 +374,11 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-### 4. **Follow Requests API**
+## 4. **Follow Requests API**
 
 #### Endpoints:
 
-1. **Get All Follow Requests**
+### 1. **Get All Follow Requests**
    - **URL:** `/`
    - **Method:** `GET`
    - **Description:** Retrieves all follow requests for the authenticated user.
@@ -394,7 +394,7 @@ This documentation provides detailed information about the API endpoints for the
      ]
      ```
 
-2. **Send Follow Request**
+### 2. **Send Follow Request**
    - **URL:** `/send`
    - **Method:** `POST`
    - **Description:** Sends a follow request to another user.
@@ -412,7 +412,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-3. **Accept Follow Request**
+### 3. **Accept Follow Request**
    - **URL:** `/accept`
    - **Method:** `POST`
    - **Description:** Accepts a follow request.
@@ -429,7 +429,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-4. **Reject Follow Request**
+### 4. **Reject Follow Request**
    - **URL:** `/reject`
    - **Method:** `POST`
    - **Description:** Rejects a follow request.
@@ -447,11 +447,11 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 
-### 5. **Notifications API**
+## 5. **Notifications API**
 
 #### Endpoints:
 
-1. **Get All Notifications**
+### 1. **Get All Notifications**
    - **URL:** `/`
    - **Method:** `GET`
    - **Description:** Retrieves all notifications for the authenticated user.
@@ -467,7 +467,7 @@ This documentation provides detailed information about the API endpoints for the
      ]
      ```
 
-2. **Mark All Notifications as Read**
+### 2. **Mark All Notifications as Read**
    - **URL:** `/`
    - **Method:** `PATCH`
    - **Description:** Marks all notifications as read for the authenticated user.
@@ -478,7 +478,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-3. **Delete All Notifications**
+### 3. **Delete All Notifications**
    - **URL:** `/`
    - **Method:** `DELETE`
    - **Description:** Deletes all notifications for the authenticated user.
@@ -491,11 +491,11 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-### 6. **Chat API**
+## 6. **Chat API**
 
 #### Endpoints:
 
-1. **Send Message**
+### 1. **Send Message**
    - **URL:** `/message`
    - **Method:** `POST`
    - **Description:** Sends a message to a user.
@@ -514,7 +514,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-2. **Get All Messages with a User**
+### 2. **Get All Messages with a User**
    - **URL:** `/{receiverId}`
    - **Method:** `GET`
    - **Description:** Retrieves all messages exchanged between the authenticated user and a specified user (receiverId).
@@ -531,7 +531,7 @@ This documentation provides detailed information about the API endpoints for the
      ]
      ```
 
-3. **Get All Conversations**
+### 3. **Get All Conversations**
    - **URL:** `/`
    - **Method:** `GET`
    - **Description:** Retrieves a list of all conversations the authenticated user is part of.
