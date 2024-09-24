@@ -4,6 +4,7 @@ let notificationSchema = new mongoose.Schema({
     reciever:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
+        index:true
     },
     type:{
         type:String,

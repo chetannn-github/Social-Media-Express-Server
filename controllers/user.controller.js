@@ -28,6 +28,9 @@ export const updateUser = async (req, res) =>{
         
         let {userName ,password, fullName, bio} = req.body;
 
+        //!validate update user 
+
+
         if(user._id.toString() != req.params.id){
             return res.json({error:"you are not authorised to update this profile"})
         }

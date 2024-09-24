@@ -10,7 +10,7 @@ export const createPost = async (req, res) =>{
         if(!caption || !postedBy){
             return res.status(400).json({ error: "Postedby and text fields are required" });
         }
-        const maxLength = 500;
+        const maxLength = 300;
 		if (caption.length > maxLength) {
 			return res.status(400).json({ error: `Text must be less than ${maxLength} characters` });
 		}

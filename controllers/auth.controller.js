@@ -102,8 +102,7 @@ export const verifyEmail = async (req, res) =>{
 
 
         // user data bhej do
-        res.json({userName:user.userName,email:user.email,gender:user.email,_id:user._id,profilePic:user.profilePic, verificationToken: user.verificationToken, isVerified:user.isVerified,resetPasswordToken: user.resetPasswordToken,
-            resetPasswordExpiresAt: user.resetPasswordExpiresAt,});
+        res.json({user});
 
 
     } catch (error) {

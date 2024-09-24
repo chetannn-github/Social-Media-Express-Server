@@ -3,6 +3,8 @@ const postSchema = new mongoose.Schema({
     caption:{
         type:String,
         default:"",
+        maxLength:300,
+        trim:true
     },
     photoURL:{
          type:String,
@@ -11,6 +13,7 @@ const postSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true,
+        index:true
     },
     likes:[
         {

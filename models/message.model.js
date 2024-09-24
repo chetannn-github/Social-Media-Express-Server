@@ -9,14 +9,12 @@ const messageSchema = new mongoose.Schema({
     conversationId:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"Conversation",
+            index:true
            
     },
     message:{
         type:String,
-        
-        
-
-
+        trim:true,
     },
     img:{
         type:String, 
