@@ -496,59 +496,78 @@ This documentation provides detailed information about the API endpoints for the
 #### Endpoints:
 
 ### 1. **Send Message**
-   - **URL:** `/message`
+   - **URL:** `/api/chat/message`
    - **Method:** `POST`
-   - **Description:** Sends a message to a user.
-   - **Request Body:**
-     ```json
-     {
-       "receiverId": "uuid",
-       "message": "string"
-     }
-     ```
+   - **Description:** Sends a message from one user to another. If there is no existing conversation between the sender and receiver, a new conversation is created.
+   ---
+
+    ## Request Body Parameters
+
+    | Parameter     | Type    | Description                                     | Required |
+    |---------------|---------|-------------------------------------------------|----------|
+    | `message`     | String  | The message content, trimmed                    | Yes      |
+    | `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
+    | `img`         | String  | (Optional) Image URL to be sent with the message | No       |
+
+    ---
    - **Response:**
+     
      ```json
-     {
-       "messageId": "uuid",
-       "message": "Message sent successfully."
-     }
+    {
+      "_id": "message-id",
+      "senderId": "sender-id",
+      "conversationId": "conversation-id",
+      "message": "Message content",
+      "img": "Image URL (if any)",
+      "seen": false,
+      "createdAt": "timestamp",
+      "updatedAt": "timestamp"
+    }
      ```
 
 ### 2. **Get All Messages with a User**
-   - **URL:** `/{receiverId}`
+   - **URL:** `/api/chat/:receiverId`
    - **Method:** `GET`
    - **Description:** Retrieves all messages exchanged between the authenticated user and a specified user (receiverId).
    - **Response:**
+     
      ```json
-     [
-       {
-         "messageId": "uuid",
-         "senderId": "uuid",
-         "receiverId": "uuid",
-         "message": "string",
-         "created_at": "timestamp"
-       }
-     ]
+    {
+      "messages": [
+        {
+          "_id": "message-id",
+          "senderId": "sender-id",
+          "conversationId": "conversation-id",
+          "message": "Message content",
+          "img": "Image URL (if any)",
+          "seen": false,
+          "createdAt": "timestamp",
+          "updatedAt": "timestamp"
+        },
+        ...
+      ]
+    }
+
      ```
 
 ### 3. **Get All Conversations**
-   - **URL:** `/`
+   - **URL:** `/api/chat/`
    - **Method:** `GET`
    - **Description:** Retrieves a list of all conversations the authenticated user is part of.
    - **Response:**
      ```json
-     [
-       {
-         "conversationId": "uuid",
-         "lastMessage": "string",
-         "lastMessageTime": "timestamp",
-         "participants": [
-           {
-             "userId": "uuid",
-             "username": "string"
-           }
-         ]
-       }
-     ]
+    
+    [
+      {
+        "_id": "conversation-id",
+        "participants": [
+          "user-id-1",
+          "user-id-2"
+        ],
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      },
+      ...
+    ]
      ```
 
