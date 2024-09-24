@@ -500,16 +500,17 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `POST`
    - **Description:** Sends a message from one user to another. If there is no existing conversation between the sender and receiver, a new conversation is created.
 
-  ---
-  ## Request Body Parameters
+---
 
-      | Parameter     | Type    | Description                                     | Required |
-      |---------------|---------|-------------------------------------------------|----------|
-      | `message`     | String  | The message content, trimmed                    | Yes      |
-      | `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
-      | `img`         | String  | (Optional) Image URL to be sent with the message | No       |
+## Request Body Parameters
 
-  ---
+| Parameter     | Type    | Description                                     | Required |
+|---------------|---------|-------------------------------------------------|----------|
+| `message`     | String  | The message content, trimmed                    | Yes      |
+| `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
+| `img`         | String  | (Optional) Image URL to be sent with the message | No       |
+
+---
 
    - **Response:**
      ```json
