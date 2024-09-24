@@ -379,41 +379,56 @@ This documentation provides detailed information about the API endpoints for the
 #### Endpoints:
 
 ### 1. **Get All Follow Requests**
-   - **URL:** `/`
+   - **URL:** `/api/request/`
    - **Method:** `GET`
    - **Description:** Retrieves all follow requests for the authenticated user.
    - **Response:**
      ```json
-     [
-       {
-         "requestId": "uuid",
-         "senderId": "uuid",
-         "senderUsername": "string",
-         "status": "pending"
-       }
-     ]
+[
+  {
+    "_id": "request-id",
+    "from": "user-id-of-sender",
+    "to": "user-id-of-recipient",
+    "status": "pending/accepted/rejected",
+  },
+  ...
+]
      ```
 
 ### 2. **Send Follow Request**
-   - **URL:** `/send`
+   - **URL:** `/api/request/send`
    - **Method:** `POST`
-   - **Description:** Sends a follow request to another user.
+   - **Description:** Sends a follow request from the current user to another user. If a follow request already exists, it is removed.
    - **Request Body:**
      ```json
      {
        "receiverId": "uuid"
      }
      ```
-   - **Response:**
-     ```json
+   #### 1. When the request is sent successfully:
+
+```json
+{
+  "message": "request sent successfully!!",
+  "request": {
+    "_id": "request-id",
+    "from": "user-id-of-sender",
+    "to": "user-id-of-recipient",
+    "status": "pending",
+    "createdAt": "timestamp",
+    "updatedAt": "timestamp"
+  }
+}
+```
+#### 2. When the request is removed successfully
+```json
      {
-       "requestId": "uuid",
-       "message": "Follow request sent successfully."
+       "message": "Follow removed successfully."
      }
-     ```
+```
 
 ### 3. **Accept Follow Request**
-   - **URL:** `/accept`
+   - **URL:** `/api/request/accept`
    - **Method:** `POST`
    - **Description:** Accepts a follow request.
    - **Request Body:**
@@ -430,7 +445,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 4. **Reject Follow Request**
-   - **URL:** `/reject`
+   - **URL:** `/api/request/reject`
    - **Method:** `POST`
    - **Description:** Rejects a follow request.
    - **Request Body:**
@@ -509,7 +524,7 @@ This documentation provides detailed information about the API endpoints for the
 |---------------|---------|-------------------------------------------------|----------|
 | `message`     | String  | The message content, trimmed                    | Yes      |
 | `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
-| `img`         | String  | (Optional) Image URL to be sent with the message | No       |
+| `img`         | String  | (Optional) Image Buffer to be sent with the message | No       |
 
 ---
 
