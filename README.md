@@ -9,7 +9,7 @@ This documentation provides detailed information about the API endpoints for the
 ---
 
 
- 1. **Authentication API**
+## 1. **Authentication API**
 
 #### Endpoints:
 
