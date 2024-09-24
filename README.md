@@ -177,12 +177,12 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-## 2. **User API (Extended)**
+## 2. **User API **
 
 #### Endpoints:
 
 ### 1. **Get Suggested Users**
-   - **URL:** `/suggested`
+   - **URL:** `/api/user/suggested`
    - **Method:** `GET`
    - **Description:** Retrieves a list of suggested users for the authenticated user.
    - **Response:**
@@ -197,7 +197,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 2. **Get User Profile**
-   - **URL:** `/profile/{userName}`
+   - **URL:** `/api/user/profile/{userName}`
    - **Method:** `GET`
    - **Description:** Retrieves the profile information of a specific user by username.
    - **Response:**
@@ -211,7 +211,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 3. **Freeze Account**
-   - **URL:** `/freeze`
+   - **URL:** `/api/user/freeze`
    - **Method:** `PATCH`
    - **Authentication:** Required
    - **Description:** Freezes the authenticated user’s account.
@@ -223,7 +223,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 4. **Update User**
-   - **URL:** `/update/{id}`
+   - **URL:** `/api/user/update/{id}`
    - **Method:** `PATCH`
    - **Authentication:** Required
    - **Description:** Updates user profile information for the user with the given ID.
@@ -243,7 +243,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
 
 ### 5. **Unfollow User**
-   - **URL:** `/unfollow/{id}`
+   - **URL:** `/api/user/unfollow/{id}`
    - **Method:** `POST`
    - **Authentication:** Required
    - **Description:** Unfollows the user with the specified ID.
@@ -254,117 +254,184 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-## 3. **Posts API (Extended)**
+## 3. **Posts API **
 
 #### Endpoints:
 
 ### 1. **Get Feed Posts**
-   - **URL:** `/feed`
+   - **URL:** `/api/post/feed`
    - **Method:** `GET`
-   - **Description:** Retrieves a list of posts from users that the authenticated user is following, sorted by recent activity.
+   - **Description:** Retrieves all posts made by the current user and their followers.
    - **Response:**
      ```json
-     [
-       {
-         "id": "uuid",
-         "content": "string",
-         "author": {
-           "id": "uuid",
-           "username": "string"
-         },
-         "created_at": "timestamp",
-         "likes": "number",
-         "comments": "number"
-       }
-     ]
+{
+    "posts": [
+        {
+            "_id": "postId",
+            "caption": "Post caption",
+            "photoURL": "URL to post image",
+            "owner": "userId",
+            "likes": ["userId1", "userId2", ...],
+            "comments": [
+                {
+                    "userId": "userId",
+                    "text": "Comment text",
+                    "userProfilePic": "URL to user's profile pic",
+                    "userName": "User's name",
+                    "createdAt": "timestamp"
+                },
+                // other comments...
+            ],
+            "createdAt": "timestamp",
+            "updatedAt": "timestamp"
+        },
+        // other posts...
+    ]
+}
      ```
 
 ### 2. **Get Post by ID**
-   - **URL:** `/{postId}`
+   - **URL:** `/api/post/{postId}`
    - **Method:** `GET`
    - **Description:** Retrieves details of a specific post by its ID.
    - **Response:**
      ```json
-     {
-       "id": "uuid",
-       "content": "string",
-       "author": {
-         "id": "uuid",
-         "username": "string"
-       },
-       "created_at": "timestamp",
-       "likes": "number",
-       "comments": [/* array of comments */]
-     }
+{
+    "post": {
+        "_id": "postId",
+        "caption": "Post caption",
+        "photoURL": "URL to post image",
+        "owner": "userId",
+        "likes": ["userId1", "userId2", ...],
+        "comments": [
+            {
+                "userId": "userId",
+                "text": "Comment text",
+                "userProfilePic": "URL to user's profile pic",
+                "userName": "User's name",
+                "createdAt": "timestamp"
+            },
+            // other comments...
+        ],
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+    }
+}
      ```
 
 ### 3. **Create Post**
-   - **URL:** `/create`
+   - **URL:** `/api/post/create`
    - **Method:** `POST`
    - **Description:** Creates a new post for the authenticated user.
-   - **Request Body:**
-     ```json
-     {
-       "content": "string",
-       "image_url": "string"
-     }
-     ```
+   ---
+
+## Request Body Parameters
+
+| Parameter   | Type   | Description                                  | Required |
+|-------------|--------|----------------------------------------------|----------|
+| `caption`   | String | The text caption for the post (max 300 characters) | Yes      |
+| `postedBy`  | String | The ID of the user creating the post         | Yes      |
+| `image`     | String | (Optional) Buffer of the image to be uploaded   | No       |
+
+---
    - **Response:**
      ```json
-     {
-       "id": "uuid",
-       "message": "Post created successfully."
-     }
-     ```
+{
+    "success": "Post Created Successfully",
+    "loggedInUser": {
+        "_id": "user-id",
+        "posts": ["post-id-1", "post-id-2", ...],
+        ...
+    },
+    "post": {
+        "_id": "post-id",
+        "caption": "This is a sample caption",
+        "photoURL": "optional-image-url",
+        "owner": "user-id",
+        "likes": [],
+        "comments": [],
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+    }
+}
 
 ### 4. **Create Comment**
-   - **URL:** `/comment`
+   - **URL:** `/api/post/comment`
    - **Method:** `POST`
    - **Description:** Adds a comment to a post.
    - **Request Body:**
      ```json
      {
        "postId": "uuid",
-       "comment": "string"
+       "text": "string"
      }
      ```
    - **Response:**
      ```json
-     {
-       "id": "uuid",
-       "message": "Comment added successfully."
-     }
+{
+    "_id": "postId",
+    "caption": "Post caption",
+    "photoURL": "URL to post image",
+    "owner": "userId",
+    "likes": ["userId1", "userId2", ...],
+    "comments": [
+        {
+            "userId": "userId",
+            "text": "This is a comment.",
+            "userProfilePic": "URL to user's profile pic",
+            "userName": "User's name",
+            "createdAt": "timestamp"
+        },
+        // other comments...
+    ],
+    "createdAt": "timestamp",
+    "updatedAt": "timestamp"
+}
      ```
 
 ### 5. **Like Post**
-   - **URL:** `/like/{postId}`
+   - **URL:** `/api/post/like/{postId}`
    - **Method:** `PATCH`
-   - **Description:** Likes a post with the given post ID.
+   - **Description:** Likes or unlikes a post by the logged-in user. If the post is already liked, it will be unliked.
    - **Response:**
      ```json
-     {
-       "postId": "uuid",
-       "likes": "number",
-       "message": "Post liked successfully."
-     }
-     ```
+{
+    "loggedInUser": {
+        "_id": "user-id",
+        "likedPosts": ["post-id-1", "post-id-2", ...],
+        ...
+    },
+    "post": {
+        "_id": "post-id",
+        "caption": "This is a sample caption",
+        "photoURL": "optional-image-url",
+        "owner": "user-id",
+        "likes": ["user-id-1", "user-id-2", ...],
+        "comments": [],
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+    }
+}
 
 ### 6. **Save Post**
-   - **URL:** `/save/{postId}`
+   - **URL:** `/api/post/save/:postId`
    - **Method:** `PATCH`
-   - **Description:** Saves a post to the authenticated user's collection.
+   - **Description:** Saves or unsaves a post for the logged-in user. If the post is already saved, it will be unsaved.
    - **Response:**
      ```json
      {
-       "postId": "uuid",
-       "message": "Post saved successfully."
-     }
+        "loggedInUser": {
+          "_id": "userId",
+          "savedPosts": ["postId1", "postId2", ...],
+          // other user fields...
+          }
+    }
      ```
 
 ### 7. **Delete Post**
-   - **URL:** `/delete/{postId}`
+   - **URL:** `/api/post/delete/{postId}`
    - **Method:** `DELETE`
-   - **Description:** Deletes the post with the given post ID.
+   - **Description:** Deletes a post if the logged-in user is the owner of the post
    - **Response:**
      ```json
      {
