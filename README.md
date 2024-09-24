@@ -63,20 +63,38 @@ This documentation provides detailed information about the API endpoints for the
    - **URL:** `/login`
    - **Method:** `POST`
    - **Description:** Logs in a user and returns a JWT token.
-   - **Request Body:**
-     ```json
-     {
-       "email": "string",
-       "password": "string"
-     }
-     ```
-   - **Response:**
-     ```json
-     {
-       "token": "string",
-       "message": "Login successful"
-     }
-     ```
+   ---
+
+## Request Body Parameters
+
+| Parameter  | Type   | Description                             | Required |
+|------------|--------|-----------------------------------------|----------|
+| `userName` | String | The username of the user, lowercase      | Yes      |
+| `password` | String | The password of the user (8-15 characters)| Yes      |
+
+---
+
+   ### Response
+```json
+{
+  "user": {
+    "_id": "USER_ID",
+    "email": "user@example.com",
+    "userName": "username",
+    "fullName": "User FullName",
+    "gender": "male/female",
+    "profilePic": "ProfilePicURL",
+    "isVerified": false,
+    "followers": [],
+    "followings": [],
+    "posts": [],
+    "likedPosts": [],
+    "savedPosts": []
+  }
+}
+
+    
+```
 
 3. **Log Out**
    - **URL:** `/logout`
@@ -94,12 +112,15 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `POST`
    - **Description:** Verifies the user’s email using a verification code. Updates the user's verification status if valid; returns an error if invalid or expired.
 
-   - **Request Body:**
-     ```json
-     {
-       "code": "string"
-     }
-     ```
+   ---
+
+## Request Body Parameters
+
+| Parameter | Type   | Description                                         | Required |
+|-----------|--------|-----------------------------------------------------|----------|
+| `code`    | String | The verification token sent to the user's email     | Yes      |
+
+---
 
    - **Response:**
      - **Success:** User data including verification status.
