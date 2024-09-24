@@ -177,7 +177,7 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-## 2. **User API **
+## 2. **User API**
 
 #### Endpoints:
 
@@ -254,7 +254,7 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-## 3. **Posts API **
+## 3. **Posts API**
 
 #### Endpoints:
 
