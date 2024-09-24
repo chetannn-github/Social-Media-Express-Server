@@ -383,7 +383,7 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `GET`
    - **Description:** Retrieves all follow requests for the authenticated user.
    - **Response:**
-     ```json
+    ```json
 [
   {
     "_id": "request-id",
@@ -393,7 +393,7 @@ This documentation provides detailed information about the API endpoints for the
   },
   ...
 ]
-     ```
+    ```
 
 ### 2. **Send Follow Request**
    - **URL:** `/api/request/send`
