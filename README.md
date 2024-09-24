@@ -509,7 +509,8 @@ This documentation provides detailed information about the API endpoints for the
       | `recieverId`  | String  | The ID of the user receiving the message         | Yes      |
       | `img`         | String  | (Optional) Image URL to be sent with the message | No       |
 
-    ---
+  ---
+
    - **Response:**
      ```json
       {
