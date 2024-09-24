@@ -13,50 +13,25 @@ This documentation provides detailed information about the API endpoints for the
 
 #### Endpoints:
 
-### 1. **Sign Up**
-   - **URL:** `/signup`
-   - **Method:** `POST`
-   - **Description:** Registers a new user after validating input, ensuring unique email and username. Hashes password, sets profile picture, and sends a verification email.
+# API Documentation
 
-   - **Request Body:**
-     ```json
-     {
-       "userName": "string",
-       "email": "string",
-       "password": "string",
-       "confirmPassword": "string",
-       "fullName": "string",
-       "gender": "male | female"
-     }
-     ```
+## 1. **Sign Up**
+- **URL:** `/signup`
+- **Method:** `POST`
+- **Description:** Registers a new user after validating input fields, ensuring the uniqueness of email and username. Passwords are hashed, a profile picture is generated, and a verification email is sent.
 
-   - **Validation:**
-     - **`email`**: Must be unique, lowercase, valid, max length 20.
-     - **`userName`**: Unique, lowercase, trimmed.
-     - **`password`**: 8-15 characters, must match `confirmPassword`.
-     - **`fullName`**: Required.
-     - **`gender`**: "male" or "female".
-  
-   - **Response:**
-     - **Success:** User details (excluding password), profile picture, and JWT token.
-     ```json
-     {
-       "user": {
-         "userName": "string",
-         "email": "string",
-         "fullName": "string",
-         "gender": "male | female",
-         "profilePic": "url"
-       },
-       "message": "User registered successfully."
-     }
-     ```
-     - **Errors:**
-       - Missing fields, password mismatch, invalid email, or existing email/username.
-       ```json
-       {
-         "error": "Error message"
-       }
+### Request Body:
+```json
+{
+  "userName": "string",       // Unique username (lowercase, trimmed)
+  "email": "string",          // Unique, valid email (max length 20, lowercase)
+  "password": "string",       // Password (8-15 characters)
+  "confirmPassword": "string",// Must match the password
+  "fullName": "string",       // Required full name of the user
+  "gender": "male | female"   // Gender of the user
+}
+
+    
        ```
 
 
@@ -90,22 +65,25 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-4. **Verify Email**
+### 4. **Verify Email**
    - **URL:** `/verify-email`
    - **Method:** `POST`
-   - **Description:** Verifies a user's email address.
+   - **Description:** Verifies the user’s email using a verification code. Updates the user's verification status if valid; returns an error if invalid or expired.
+
    - **Request Body:**
      ```json
      {
-       "verificationToken": "string"
+       "code": "string"
      }
      ```
+
    - **Response:**
-     ```json
-     {
-       "message": "Email verified successfully."
-     }
-     ```
+     - **Success:** User data including verification status.
+     - **Error:** 
+       - "Invalid or expired verificationToken"
+       - "something went wrong in verification of user"
+
+---
 
 5. **Forgot Password**
    - **URL:** `/forgot-password`
