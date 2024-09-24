@@ -9,7 +9,7 @@ This documentation provides detailed information about the API endpoints for the
 ---
 
 
-### 1. **Authentication API**
+ 1. **Authentication API**
 
 #### Endpoints:
 
@@ -59,13 +59,13 @@ This documentation provides detailed information about the API endpoints for the
 ```
 
 
-## 2. **Log In**
+2. **Log In**
    - **URL:** `api/auth/login`
    - **Method:** `POST`
    - **Description:** Logs in a user and returns a JWT token.
    ---
 
-## Request Body Parameters
+### Request Body Parameters
 
 | Parameter  | Type   | Description                             | Required |
 |------------|--------|-----------------------------------------|----------|
@@ -107,14 +107,14 @@ This documentation provides detailed information about the API endpoints for the
      }
      ```
 
-### 4. **Verify Email**
-   - **URL:** `.api/auth/verify-email`
+4. **Verify Email**
+   - **URL:** `/api/auth/verify-email`
    - **Method:** `POST`
    - **Description:** Verifies the user’s email using a verification code. Updates the user's verification status if valid; returns an error if invalid or expired.
 
    ---
 
-## Request Body Parameters
+### Request Body Parameters
 
 | Parameter | Type   | Description                                         | Required |
 |-----------|--------|-----------------------------------------------------|----------|
@@ -152,19 +152,19 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `POST`
    - **Description:** Resets the user's password using a reset token.
    ---
-   ## Request Parameters
+   ### Request Parameters
 
-| Parameter | Type   | Description                              | Required |
-|-----------|--------|------------------------------------------|----------|
-| `token`   | String | The password reset token provided to the user | Yes      |
+  | Parameter | Type   | Description                              | Required |
+  |-----------|--------|------------------------------------------|----------|
+  | `token`   | String | The password reset token provided to the user | Yes      |
 
 ---
 
-## Request Body Parameters
+  ### Request Body Parameters
 
-| Parameter  | Type   | Description                             | Required |
-|------------|--------|-----------------------------------------|----------|
-| `password` | String | The new password for the user (8-15 characters) | Yes      |
+  | Parameter  | Type   | Description                             | Required |
+  |------------|--------|-----------------------------------------|----------|
+  | `password` | String | The new password for the user (8-15 characters) | Yes      |
 
 ---
 
