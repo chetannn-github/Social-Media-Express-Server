@@ -22,15 +22,10 @@ app.use(express.urlencoded({extended:true})); // to parse form  data from req.bo
 app.use(cookieParser());
 
 
-app.get("/api/test",isAuthenticated,(req,res)=>{
-   res.send("test api");
+app.get("/api/test",(req,res)=>{
+   res.send("test api to awake server");
 })
 
-
-
-cron.schedule('10 * * * *', async() => {
-  await fetch("https://")
-});
 
 app.use("/api/auth",authRoutes);
 app.use("/api/user",isAuthenticated,userRoutes);
