@@ -408,24 +408,24 @@ This documentation provides detailed information about the API endpoints for the
    - **Response:**
      ```json
       {
-    "_id": "postId",
-    "caption": "Post caption",
-    "photoURL": "URL to post image",
-    "owner": "userId",
-    "likes": ["userId1", "userId2", ...],
-    "comments": [
-        {
-            "userId": "userId",
-            "text": "This is a comment.",
-            "userProfilePic": "URL to user's profile pic",
-            "userName": "User's name",
-            "createdAt": "timestamp"
-        },
-        // other comments...
-    ],
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-    } 
+        "_id": "postId",
+        "caption": "Post caption",
+        "photoURL": "URL to post image",
+        "owner": "userId",
+        "likes": ["userId1", "userId2", ...],
+        "comments": [
+            {
+                "userId": "userId",
+                "text": "This is a comment.",
+                "userProfilePic": "URL to user's profile pic",
+                "userName": "User's name",
+                "createdAt": "timestamp"
+            },
+            // other comments...
+        ],
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      } 
      ```
 
 ### 5. **Like Post**
@@ -435,22 +435,22 @@ This documentation provides detailed information about the API endpoints for the
    - **Response:**
      ```json
       { 
-    "loggedInUser": {
-        "_id": "user-id",
-        "likedPosts": ["post-id-1", "post-id-2", ...],
-        ...
-    },
-    "post": {
-        "_id": "post-id",
-        "caption": "This is a sample caption",
-        "photoURL": "optional-image-url",
-        "owner": "user-id",
-        "likes": ["user-id-1", "user-id-2", ...],
-        "comments": [],
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp"
-    }
-    }
+        "loggedInUser": {
+            "_id": "user-id",
+            "likedPosts": ["post-id-1", "post-id-2", ...],
+            ...
+        },
+        "post": {
+            "_id": "post-id",
+            "caption": "This is a sample caption",
+            "photoURL": "optional-image-url",
+            "owner": "user-id",
+            "likes": ["user-id-1", "user-id-2", ...],
+            "comments": [],
+            "createdAt": "timestamp",
+            "updatedAt": "timestamp"
+        }
+      }
      ```
 
 ### 6. **Save Post**
@@ -465,7 +465,7 @@ This documentation provides detailed information about the API endpoints for the
           "savedPosts": ["postId1", "postId2", ...],
           // other user fields...
           }
-    }
+      }
      ```
 
 ### 7. **Delete Post**
@@ -583,7 +583,7 @@ This documentation provides detailed information about the API endpoints for the
        {
          "notificationId": "uuid",
          "reciever":"uuid",
-         "type":"enum:["requestAccepted", "like", "comment"]",
+         "type":"requestAccepted/like/comment",
          "read": "boolean",
          "created_at": "timestamp"
        }
