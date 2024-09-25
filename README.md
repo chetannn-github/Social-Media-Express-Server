@@ -9,7 +9,7 @@ This documentation provides detailed information about the API endpoints for the
 ---
 
 <details> 
-  <summary><h1>1. Authentication API</h1></summary>
+  <summary><h2>1. Authentication API</h2></summary>
 
   #### Endpoints:
 
@@ -186,7 +186,7 @@ This documentation provides detailed information about the API endpoints for the
 
 <details> 
 
-<summary><h1>2. User API</h1></summary>
+<summary><h2>2. User API</h2></summary>
 
 #### Endpoints:
 
@@ -300,7 +300,7 @@ This documentation provides detailed information about the API endpoints for the
 
 <details> 
 ## 3. ****
-<summary><h1>3. Posts API</h1></summary>
+<summary><h2>3. Posts API</h2></summary>
 
 #### Endpoints:
 
@@ -494,7 +494,7 @@ This documentation provides detailed information about the API endpoints for the
 <details> 
 
 
-<summary><h1>4. Follow Requests API</h1></summary>
+<summary><h2>4. Follow Requests API</h2></summary>
 
 #### Endpoints:
 
@@ -585,7 +585,7 @@ This documentation provides detailed information about the API endpoints for the
 
 <details> 
 
-<summary><h1>5. Notifications API</h1></summary>
+<summary><h2>5. Notifications API</h2></summary>
 
 #### Endpoints:
 
@@ -636,7 +636,7 @@ This documentation provides detailed information about the API endpoints for the
 </details> 
 
 <details> 
-## 6. **Chat API**
+<summary><h2>6. Chat  API</h2></summary>
 
 #### Endpoints:
 
