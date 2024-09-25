@@ -1,4 +1,5 @@
 import express from "express";
+import cron from "node-cron"
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import { connectToMongoDB } from "./config/mongodb.config.js";
@@ -10,9 +11,11 @@ import { postRoutes } from "./routes/post.routes.js";
 import { chatRoutes } from "./routes/chat.routes.js";
 import { requestRoutes } from "./routes/request.routes.js";
 import { notificationRoutes } from "./routes/notification.routes.js";
+import job from "./cron/cron.js";
 
 
 const app = express();
+job.start();
 
 app.use(express.json()); // to parse json data from req.body
 app.use(express.urlencoded({extended:true})); // to parse form  data from req.body
@@ -23,6 +26,11 @@ app.get("/api/test",isAuthenticated,(req,res)=>{
    res.send("test api");
 })
 
+
+
+cron.schedule('10 * * * *', async() => {
+  await fetch("https://")
+});
 
 app.use("/api/auth",authRoutes);
 app.use("/api/user",isAuthenticated,userRoutes);
