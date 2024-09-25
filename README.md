@@ -257,9 +257,9 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-  **Successful Response:**
-       ```json
-        {
+### Response
+    ```json
+      {
           "_id": "user_id",
           "userName": "newUserName",
           "fullName": "New Full Name",
@@ -268,8 +268,8 @@ This documentation provides detailed information about the API endpoints for the
           "likedPosts": [...],
           "savedPosts": [...],
           // Other user details
-        }
-       ```
+      }
+    ```
 
 ### 5. **Unfollow User**
    - **URL:** `/api/user/unfollow/{id}`
