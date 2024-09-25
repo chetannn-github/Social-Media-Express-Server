@@ -298,8 +298,7 @@ This documentation provides detailed information about the API endpoints for the
 
 </details>
 
-<details> 
-## 3. ****
+<details>
 <summary><h2>3. Posts API</h2></summary>
 
 #### Endpoints:
