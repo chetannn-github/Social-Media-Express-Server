@@ -1,5 +1,4 @@
 import express from "express";
-import cron from "node-cron"
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import { connectToMongoDB } from "./config/mongodb.config.js";

@@ -1,10 +1,10 @@
 # API Documentation for Social Media Express Server
 
 ## Introduction
-This documentation provides detailed information about the API endpoints for the social media server. The API is designed for interaction with users, posts, comments, likes, and messaging functionalities.
+This documentation provides detailed information about the API endpoints for the social media server. The API is designed for interaction with users, posts, followRequests, comments, likes, notifications, and messaging functionalities.
 
 ## Base URL
-- **Base URL:** `https://api.yourdomain.com/v1/`
+- **Base URL:** `https://social-media-express-server.onrender.com`
 
 ---
 
