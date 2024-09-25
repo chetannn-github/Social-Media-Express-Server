@@ -8,179 +8,181 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
+<details> 
+  <summary><strong>1. Authentication API</strong></summary>
 
-## 1. **Authentication API**
+  #### Endpoints:
 
-#### Endpoints:
+  
 
-# API Documentation
-
-### 1. **Sign Up**
-- **URL:** `/api/auth/signup`
-- **Method:** `POST`
-- **Description:** Registers a new user after validating input fields, ensuring the uniqueness of email and username. Passwords are hashed, a profile picture is generated, and a verification email is sent.
+  ### 1. **Sign Up**
+  - **URL:** `/api/auth/signup`
+  - **Method:** `POST`
+  - **Description:** Registers a new user after validating input fields, ensuring the uniqueness of email and username. Passwords are hashed, a profile picture is generated, and a verification email is sent.
 
 
----
+  ---
 
-### Request Body Parameters
+  ### Request Body Parameters
 
-| Parameter         | Type    | Description                                         | Required |
-|-------------------|---------|-----------------------------------------------------|----------|
-| `userName`        | String  | Unique username, must be lowercase and trimmed      | Yes      |
-| `password`        | String  | User's password (8-15 characters, trimmed)          | Yes      |
-| `confirmPassword` | String  | Should match the `password` field                   | Yes      |
-| `email`           | String  | User's email address, must be valid and unique      | Yes      |
-| `gender`          | String  | Gender of the user (`male` or `female`)             | Yes      |
-| `fullName`        | String  | Full name of the user, trimmed                      | Yes      |
+  | Parameter         | Type    | Description                                         | Required |
+  |-------------------|---------|-----------------------------------------------------|----------|
+  | `userName`        | String  | Unique username, must be lowercase and trimmed      | Yes      |
+  | `password`        | String  | User's password (8-15 characters, trimmed)          | Yes      |
+  | `confirmPassword` | String  | Should match the `password` field                   | Yes      |
+  | `email`           | String  | User's email address, must be valid and unique      | Yes      |
+  | `gender`          | String  | Gender of the user (`male` or `female`)             | Yes      |
+  | `fullName`        | String  | Full name of the user, trimmed                      | Yes      |
 
----
+  ---
 
-### Response
-```json
-{
-  "user": {
-    "_id": "USER_ID",
-    "email": "user@example.com",
-    "userName": "username",
-    "fullName": "User FullName",
-    "gender": "male / female",
-    "profilePic": "ProfilePicURL",
-    "bio":"",
-    "isVerified": false,
-    "followers": [],
-    "followings": [],
-    "posts": [],
-    "likedPosts": [],
-    "savedPosts": [],
-    "isFrozen":false,
-    "isVerified":false,
+  ### Response
+  ```json
+  {
+    "user": {
+      "_id": "USER_ID",
+      "email": "user@example.com",
+      "userName": "username",
+      "fullName": "User FullName",
+      "gender": "male / female",
+      "profilePic": "ProfilePicURL",
+      "bio":"",
+      "isVerified": false,
+      "followers": [],
+      "followings": [],
+      "posts": [],
+      "likedPosts": [],
+      "savedPosts": [],
+      "isFrozen":false,
+      "isVerified":false,
+    }
   }
-}
 
-    
-```
+      
+  ```
 
 
-### 2. **Log In**
-   - **URL:** `api/auth/login`
-   - **Method:** `POST`
-   - **Description:** Logs in a user and returns a JWT token.
-   ---
-
-### Request Body Parameters
-
-| Parameter  | Type   | Description                             | Required |
-|------------|--------|-----------------------------------------|----------|
-| `userName` | String | The username of the user, lowercase      | Yes      |
-| `password` | String | The password of the user (8-15 characters)| Yes      |
-
----
-
-   ### Response
-```json
-{
-  "user": {
-    "_id": "USER_ID",
-    "email": "user@example.com",
-    "userName": "username",
-    "fullName": "User FullName",
-    "gender": "male/female",
-    "profilePic": "ProfilePicURL",
-    "isVerified": "false / true",
-    "isFrozen":"false / true",
-    "bio":"",
-    "followers": [],
-    "followings": [],
-    "posts": [],
-    "likedPosts": [],
-    "savedPosts": []
-  }
-}
-
-    
-```
-
-### 3. **Log Out**
-   - **URL:** `api/auth/logout`
-   - **Method:** `POST`
-   - **Description:** Logs out the user.
-   - **Response:**
-     ```json
-     {
-       "message": "Logged out successfully."
-     }
-     ```
-
-### 4. **Verify Email**
-   - **URL:** `/api/auth/verify-email`
-   - **Method:** `POST`
-   - **Description:** Verifies the user’s email using a verification code. Updates the user's verification status if valid; returns an error if invalid or expired.
-
-   ---
-
-### Request Body Parameters
-
-| Parameter | Type   | Description                                         | Required |
-|-----------|--------|-----------------------------------------------------|----------|
-| `code`    | String | The verification token sent to the user's email     | Yes      |
-
----
-
-   - **Response:**
-     - **Success:** User data including verification status.
-     - **Error:** 
-       - "Invalid or expired verificationToken"
-       - "something went wrong in verification of user"
-
----
-
-### 5. **Forgot Password**
-   - **URL:** `api/auth/forgot-password`
-   - **Method:** `POST`
-   - **Description:** Sends a password reset link to the user's email.
-   - **Request Body:**
-     ```json
-     {
-       "email": "string"
-     }
-     ```
-   - **Response:**
-     ```json
-     {
-       "message": "Password reset link sent to email."
-     }
-     ```
-
-### 6. **Reset Password**
-   - **URL:** `api/auth/reset-password/:token`
-   - **Method:** `POST`
-   - **Description:** Resets the user's password using a reset token.
-   ---
-   ### Request Parameters
-
-  | Parameter | Type   | Description                              | Required |
-  |-----------|--------|------------------------------------------|----------|
-  | `token`   | String | The password reset token provided to the user | Yes      |
-
----
+  ### 2. **Log In**
+    - **URL:** `api/auth/login`
+    - **Method:** `POST`
+    - **Description:** Logs in a user and returns a JWT token.
+    ---
 
   ### Request Body Parameters
 
   | Parameter  | Type   | Description                             | Required |
   |------------|--------|-----------------------------------------|----------|
-  | `password` | String | The new password for the user (8-15 characters) | Yes      |
+  | `userName` | String | The username of the user, lowercase      | Yes      |
+  | `password` | String | The password of the user (8-15 characters)| Yes      |
 
----
+  ---
 
-   - **Response:**
-     ```json
-     {
-       "message": "Password reset successfully."
-     }
-     ```
+    ### Response
+  ```json
+  {
+    "user": {
+      "_id": "USER_ID",
+      "email": "user@example.com",
+      "userName": "username",
+      "fullName": "User FullName",
+      "gender": "male/female",
+      "profilePic": "ProfilePicURL",
+      "isVerified": "false / true",
+      "isFrozen":"false / true",
+      "bio":"",
+      "followers": [],
+      "followings": [],
+      "posts": [],
+      "likedPosts": [],
+      "savedPosts": []
+    }
+  }
 
----
+      
+  ```
+
+  ### 3. **Log Out**
+    - **URL:** `api/auth/logout`
+    - **Method:** `POST`
+    - **Description:** Logs out the user.
+    - **Response:**
+      ```json
+      {
+        "message": "Logged out successfully."
+      }
+      ```
+
+  ### 4. **Verify Email**
+    - **URL:** `/api/auth/verify-email`
+    - **Method:** `POST`
+    - **Description:** Verifies the user’s email using a verification code. Updates the user's verification status if valid; returns an error if invalid or expired.
+
+    ---
+
+  ### Request Body Parameters
+
+  | Parameter | Type   | Description                                         | Required |
+  |-----------|--------|-----------------------------------------------------|----------|
+  | `code`    | String | The verification token sent to the user's email     | Yes      |
+
+  ---
+
+    - **Response:**
+      - **Success:** User data including verification status.
+      - **Error:** 
+        - "Invalid or expired verificationToken"
+        - "something went wrong in verification of user"
+
+  ---
+
+  ### 5. **Forgot Password**
+    - **URL:** `api/auth/forgot-password`
+    - **Method:** `POST`
+    - **Description:** Sends a password reset link to the user's email.
+    - **Request Body:**
+      ```json
+      {
+        "email": "string"
+      }
+      ```
+    - **Response:**
+      ```json
+      {
+        "message": "Password reset link sent to email."
+      }
+      ```
+
+  ### 6. **Reset Password**
+    - **URL:** `api/auth/reset-password/:token`
+    - **Method:** `POST`
+    - **Description:** Resets the user's password using a reset token.
+    ---
+    ### Request Parameters
+
+    | Parameter | Type   | Description                              | Required |
+    |-----------|--------|------------------------------------------|----------|
+    | `token`   | String | The password reset token provided to the user | Yes      |
+
+  ---
+
+    ### Request Body Parameters
+
+    | Parameter  | Type   | Description                             | Required |
+    |------------|--------|-----------------------------------------|----------|
+    | `password` | String | The new password for the user (8-15 characters) | Yes      |
+
+  ---
+
+    - **Response:**
+      ```json
+      {
+        "message": "Password reset successfully."
+      }
+      ```
+
+  ---
+
+</details>
 
 ## 2. **User API**
 
