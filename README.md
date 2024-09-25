@@ -192,23 +192,23 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Retrieves a list of users that the logged-in user does not follow.
    - **Response:**
      ```json
-[
-    {
-        "_id": "userId1",
-        "userName": "username1",
-        "email": "email1@example.com",
-        "profilePic": "URL to profile picture",
-        // other public fields...
-    },
-    {
-        "_id": "userId2",
-        "userName": "username2",
-        "email": "email2@example.com",
-        "profilePic": "URL to profile picture",
-        // other public fields...
-    }
+      [
+        {
+            "_id": "userId1",
+            "userName": "username1",
+            "email": "email1@example.com",
+            "profilePic": "URL to profile picture",
+            // other public fields...
+        },
+        {
+            "_id": "userId2",
+            "userName": "username2",
+            "email": "email2@example.com",
+            "profilePic": "URL to profile picture",
+            // other public fields...
+        }
     // other suggested users...
-]
+      ]
      ```
 
 ### 2. **Get User Profile**
@@ -217,14 +217,14 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** This controller fetches a user's profile based on their `userName`. It distinguishes between the logged-in user and other users, returning appropriate profile information while ensuring that sensitive fields are excluded.
    - **Response:**
      ```json
-    {
-      "userName": "exampleUser",
-      "email": "example@example.com",
-      "posts": [...],
-      "likedPosts": [...],
-      "savedPosts": [...],
-      // Other user details
-    }
+      {
+        "userName": "exampleUser",
+        "email": "example@example.com",
+        "posts": [...],
+        "likedPosts": [...],
+        "savedPosts": [...],
+        // Other user details
+      }
   
      ```
 
@@ -257,19 +257,19 @@ This documentation provides detailed information about the API endpoints for the
 
 ---
 
-   **Successful Response:**
-    ```json
-    {
-      "_id": "user_id",
-      "userName": "newUserName",
-      "fullName": "New Full Name",
-      "bio": "Updated bio",
-      "posts": [...],
-      "likedPosts": [...],
-      "savedPosts": [...],
-      // Other user details
-    }
-    ```
+  **Successful Response:**
+       ```json
+        {
+          "_id": "user_id",
+          "userName": "newUserName",
+          "fullName": "New Full Name",
+          "bio": "Updated bio",
+          "posts": [...],
+          "likedPosts": [...],
+          "savedPosts": [...],
+          // Other user details
+        }
+       ```
 
 ### 5. **Unfollow User**
    - **URL:** `/api/user/unfollow/{id}`
@@ -278,19 +278,19 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Unfollows the user with the specified ID.
    - **Response:**
       ```json
-    {
-      "message": "User unfollowed successfully",
-      "user": {
-        "_id": "user_id",
-        "userName": "updatedUserName",
-        "fullName": "Updated Full Name",
-        "bio": "Updated bio",
-        "followings": [...],
-        "followers": [...],
-        // Other user details
-      }
-    }
-    ```
+        {
+        "message": "User unfollowed successfully",
+        "user": {
+          "_id": "user_id",
+          "userName": "updatedUserName",
+          "fullName": "Updated Full Name",
+          "bio": "Updated bio",
+          "followings": [...],
+          "followers": [...],
+          // Other user details
+          }
+        }
+      ```
 
 ## 3. **Posts API**
 
@@ -302,9 +302,40 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Retrieves all posts made by the current user and their followers.
    - **Response:**
      ```json
-{
-    "posts": [
-        {
+      { 
+        "posts": [
+            {
+                "_id": "postId",
+                "caption": "Post caption",
+                "photoURL": "URL to post image",
+                "owner": "userId",
+                "likes": ["userId1", "userId2", ...],
+                "comments": [
+                    {
+                        "userId": "userId",
+                        "text": "Comment text",
+                        "userProfilePic": "URL to user's profile pic",
+                        "userName": "User's name",
+                        "createdAt": "timestamp"
+                    },
+                    // other comments...
+                ],
+                "createdAt": "timestamp",
+                "updatedAt": "timestamp"
+            },
+            // other posts...
+        ]
+      }
+     ```
+
+### 2. **Get Post by ID**
+   - **URL:** `/api/post/{postId}`
+   - **Method:** `GET`
+   - **Description:** Retrieves details of a specific post by its ID.
+   - **Response:**
+     ```json
+      {
+        "post": {
             "_id": "postId",
             "caption": "Post caption",
             "photoURL": "URL to post image",
@@ -322,39 +353,8 @@ This documentation provides detailed information about the API endpoints for the
             ],
             "createdAt": "timestamp",
             "updatedAt": "timestamp"
-        },
-        // other posts...
-    ]
-}
-     ```
-
-### 2. **Get Post by ID**
-   - **URL:** `/api/post/{postId}`
-   - **Method:** `GET`
-   - **Description:** Retrieves details of a specific post by its ID.
-   - **Response:**
-     ```json
-{
-    "post": {
-        "_id": "postId",
-        "caption": "Post caption",
-        "photoURL": "URL to post image",
-        "owner": "userId",
-        "likes": ["userId1", "userId2", ...],
-        "comments": [
-            {
-                "userId": "userId",
-                "text": "Comment text",
-                "userProfilePic": "URL to user's profile pic",
-                "userName": "User's name",
-                "createdAt": "timestamp"
-            },
-            // other comments...
-        ],
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp"
-    }
-}
+        }
+      }
      ```
 
 ### 3. **Create Post**
@@ -374,24 +374,25 @@ This documentation provides detailed information about the API endpoints for the
 ---
    - **Response:**
      ```json
-{
-    "success": "Post Created Successfully",
-    "loggedInUser": {
-        "_id": "user-id",
-        "posts": ["post-id-1", "post-id-2", ...],
-        ...
-    },
-    "post": {
-        "_id": "post-id",
-        "caption": "This is a sample caption",
-        "photoURL": "optional-image-url",
-        "owner": "user-id",
-        "likes": [],
-        "comments": [],
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp"
-    }
-}
+      {
+        "success": "Post Created Successfully",
+        "loggedInUser": {
+            "_id": "user-id",
+            "posts": ["post-id-1", "post-id-2", ...],
+            ...
+        },
+        "post": {
+            "_id": "post-id",
+            "caption": "This is a sample caption",
+            "photoURL": "optional-image-url",
+            "owner": "user-id",
+            "likes": [],
+            "comments": [],
+            "createdAt": "timestamp",
+            "updatedAt": "timestamp"
+        }
+      }
+     ```
 
 ### 4. **Create Comment**
    - **URL:** `/api/post/comment`
@@ -406,7 +407,7 @@ This documentation provides detailed information about the API endpoints for the
      ```
    - **Response:**
      ```json
-{
+      {
     "_id": "postId",
     "caption": "Post caption",
     "photoURL": "URL to post image",
@@ -424,7 +425,7 @@ This documentation provides detailed information about the API endpoints for the
     ],
     "createdAt": "timestamp",
     "updatedAt": "timestamp"
-}
+    } 
      ```
 
 ### 5. **Like Post**
@@ -433,7 +434,7 @@ This documentation provides detailed information about the API endpoints for the
    - **Description:** Likes or unlikes a post by the logged-in user. If the post is already liked, it will be unliked.
    - **Response:**
      ```json
-{
+      { 
     "loggedInUser": {
         "_id": "user-id",
         "likedPosts": ["post-id-1", "post-id-2", ...],
@@ -449,7 +450,8 @@ This documentation provides detailed information about the API endpoints for the
         "createdAt": "timestamp",
         "updatedAt": "timestamp"
     }
-}
+    }
+     ```
 
 ### 6. **Save Post**
    - **URL:** `/api/post/save/:postId`
