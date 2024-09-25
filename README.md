@@ -186,7 +186,7 @@ This documentation provides detailed information about the API endpoints for the
 
 <details> 
 
-## 2. **User API**
+<summary><h1>2. User API</h1></summary>
 
 #### Endpoints:
 
@@ -299,7 +299,8 @@ This documentation provides detailed information about the API endpoints for the
 </details>
 
 <details> 
-## 3. **Posts API**
+## 3. ****
+<summary><h1>3. Posts API</h1></summary>
 
 #### Endpoints:
 
@@ -492,7 +493,8 @@ This documentation provides detailed information about the API endpoints for the
 
 <details> 
 
-## 4. **Follow Requests API**
+
+<summary><h1>4. Follow Requests API</h1></summary>
 
 #### Endpoints:
 
@@ -583,7 +585,7 @@ This documentation provides detailed information about the API endpoints for the
 
 <details> 
 
-## 5. **Notifications API**
+<summary><h1>5. Notifications API</h1></summary>
 
 #### Endpoints:
 
