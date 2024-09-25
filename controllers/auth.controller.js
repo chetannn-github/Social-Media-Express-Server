@@ -61,7 +61,9 @@ export const signUp = async(req, res)=>{
 
         // verification code wali email bhej do !!
 
-        user.password= undefind;
+        user.password= undefined;
+        user.verificationToken= undefined;
+        user.verificationTokenExpiresAt= undefined;
         // user ki details send krdooo 
         console.log("signup route");
         res.json({user});
@@ -82,7 +84,7 @@ export const verifyEmail = async (req, res) =>{
         let user = await  userModel.findOne({
             verificationToken:code,
             verificationTokenExpiresAt:{$gt: Date.now()},
-        });
+        }).select(["-password","-resetPasswordToken","-resetPasswordExpiresAt"]);
 
          // if user dne then invalid token bhej do
         
@@ -121,7 +123,7 @@ export const login = async(req, res)=>{
         }
 
         // user ko db se find kroo 
-        let user = await userModel.findOne({userName}).select(["-verificationToken","-resetPasswordToken"]);
+        let user = await userModel.findOne({userName}).select(["-verificationToken","-resetPasswordToken","-resetPasswordExpiresAt","-verificationTokenExpiresAt"]);
     
 
         // if user dne => redirect krdo signup route pr 

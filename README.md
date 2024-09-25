@@ -44,14 +44,17 @@ This documentation provides detailed information about the API endpoints for the
     "email": "user@example.com",
     "userName": "username",
     "fullName": "User FullName",
-    "gender": "male/female",
+    "gender": "male / female",
     "profilePic": "ProfilePicURL",
+    "bio":"",
     "isVerified": false,
     "followers": [],
     "followings": [],
     "posts": [],
     "likedPosts": [],
-    "savedPosts": []
+    "savedPosts": [],
+    "isFrozen":false,
+    "isVerified":false,
   }
 }
 
@@ -84,7 +87,9 @@ This documentation provides detailed information about the API endpoints for the
     "fullName": "User FullName",
     "gender": "male/female",
     "profilePic": "ProfilePicURL",
-    "isVerified": false/true,
+    "isVerified": "false / true",
+    "isFrozen":"false / true",
+    "bio":"",
     "followers": [],
     "followings": [],
     "posts": [],
@@ -184,36 +189,48 @@ This documentation provides detailed information about the API endpoints for the
 ### 1. **Get Suggested Users**
    - **URL:** `/api/user/suggested`
    - **Method:** `GET`
-   - **Description:** Retrieves a list of suggested users for the authenticated user.
+   - **Description:** Retrieves a list of users that the logged-in user does not follow.
    - **Response:**
      ```json
-     [
-       {
-         "id": "uuid",
-         "username": "string",
-         "profilePic": "url"
-       }
-     ]
+[
+    {
+        "_id": "userId1",
+        "userName": "username1",
+        "email": "email1@example.com",
+        "profilePic": "URL to profile picture",
+        // other public fields...
+    },
+    {
+        "_id": "userId2",
+        "userName": "username2",
+        "email": "email2@example.com",
+        "profilePic": "URL to profile picture",
+        // other public fields...
+    }
+    // other suggested users...
+]
      ```
 
 ### 2. **Get User Profile**
    - **URL:** `/api/user/profile/{userName}`
    - **Method:** `GET`
-   - **Description:** Retrieves the profile information of a specific user by username.
+   - **Description:** This controller fetches a user's profile based on their `userName`. It distinguishes between the logged-in user and other users, returning appropriate profile information while ensuring that sensitive fields are excluded.
    - **Response:**
      ```json
-     {
-       "id": "uuid",
-       "username": "string",
-       "bio": "string",
-       "posts": [/* array of posts */]
-     }
+    {
+      "userName": "exampleUser",
+      "email": "example@example.com",
+      "posts": [...],
+      "likedPosts": [...],
+      "savedPosts": [...],
+      // Other user details
+    }
+  
      ```
 
 ### 3. **Freeze Account**
    - **URL:** `/api/user/freeze`
    - **Method:** `PATCH`
-   - **Authentication:** Required
    - **Description:** Freezes the authenticated user’s account.
    - **Response:**
      ```json
@@ -227,20 +244,32 @@ This documentation provides detailed information about the API endpoints for the
    - **Method:** `PATCH`
    - **Authentication:** Required
    - **Description:** Updates user profile information for the user with the given ID.
-   - **Request Body:**
-     ```json
-     {
-       "username": "string",
-       "bio": "string",
-       "profilePic": "string"
-     }
-     ```
-   - **Response:**
-     ```json
-     {
-       "message": "User updated successfully."
-     }
-     ```
+   ---
+
+### Request Body Parameters
+
+| Parameter  | Type   | Description                                     | Required |
+|------------|--------|-------------------------------------------------|----------|
+| `userName` | String | The new username for the user (if updating).   | No       |
+| `password` | String | The new password for the user (if updating).    | No       |
+| `fullName` | String | The full name of the user (if updating).        | No       |
+| `bio`      | String | A short biography of the user (if updating).     | No       |
+
+---
+
+   **Successful Response:**
+    ```json
+    {
+      "_id": "user_id",
+      "userName": "newUserName",
+      "fullName": "New Full Name",
+      "bio": "Updated bio",
+      "posts": [...],
+      "likedPosts": [...],
+      "savedPosts": [...],
+      // Other user details
+    }
+    ```
 
 ### 5. **Unfollow User**
    - **URL:** `/api/user/unfollow/{id}`
@@ -248,11 +277,20 @@ This documentation provides detailed information about the API endpoints for the
    - **Authentication:** Required
    - **Description:** Unfollows the user with the specified ID.
    - **Response:**
-     ```json
-     {
-       "message": "Unfollowed user successfully."
-     }
-     ```
+      ```json
+    {
+      "message": "User unfollowed successfully",
+      "user": {
+        "_id": "user_id",
+        "userName": "updatedUserName",
+        "fullName": "Updated Full Name",
+        "bio": "Updated bio",
+        "followings": [...],
+        "followers": [...],
+        // Other user details
+      }
+    }
+    ```
 
 ## 3. **Posts API**
 

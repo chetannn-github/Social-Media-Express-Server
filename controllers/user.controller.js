@@ -82,9 +82,9 @@ export const getUserProfile= async (req, res) =>{
             return res.json({error:"user not found ! "});
         }
         if(user._id.toString()==req.user._id.toString()){
-             user = await  userModel.findOne({userName}).select(["-password","-verificationToken"]).populate(["likedPosts","posts","savedPosts"]);
+             user = await  userModel.findOne({userName}).select(["-password","-verificationToken","-resetPasswordToken","-resetPasswordExpiresAt","-verificationTokenExpiresAt"]).populate(["likedPosts","posts","savedPosts"]);
         }else{
-            user = await  userModel.findOne({userName}).select(["-password","-likedPosts","-savedPosts","-verificationToken"]).populate(["posts"]);
+            user = await  userModel.findOne({userName}).select(["-password","-likedPosts","-savedPosts","-verificationToken","-resetPasswordToken","-resetPasswordExpiresAt","-verificationTokenExpiresAt"]).populate(["posts"]);
         }
        
         res.json(user);
@@ -106,7 +106,7 @@ export const getSuggestedUsers = async (req, res)=>{
               { _id: { $ne: req.user._id } },
               { _id: { $nin: req.user.followings } }
             ]
-          }).select("-password")
+          }).select(["-password","-verificationToken","-resetPasswordToken","-resetPasswordExpiresAt","-verificationTokenExpiresAt","-savedPosts","-likedPosts"])
         if(!suggestedUsers || suggestedUsers.length==0){
             res.json({message:"no suggestions "})
         }
