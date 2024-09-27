@@ -84,7 +84,7 @@ export const verifyEmail = async (req, res) =>{
         let user = await  userModel.findOne({
             verificationToken:code,
             verificationTokenExpiresAt:{$gt: Date.now()},
-        }).select(["-password","-resetPasswordToken","-resetPasswordExpiresAt"]);
+        }).select(["-password","-resetPasswordToken","-resetPasswordExpiresAt"]).populate(["posts","likedPosts","savedPosts"]);
 
          // if user dne then invalid token bhej do
         
@@ -123,7 +123,7 @@ export const login = async(req, res)=>{
         }
 
         // user ko db se find kroo 
-        let user = await userModel.findOne({userName}).select(["-verificationToken","-resetPasswordToken","-resetPasswordExpiresAt","-verificationTokenExpiresAt"]);
+        let user = await userModel.findOne({userName}).select(["-verificationToken","-resetPasswordToken","-resetPasswordExpiresAt","-verificationTokenExpiresAt"]).populate(["likedPosts","posts","savedPosts"]);
     
 
         // if user dne => redirect krdo signup route pr 
